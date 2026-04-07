@@ -1,6 +1,39 @@
 import { lazy, Suspense } from "react";
 import { motion, useReducedMotion } from "framer-motion";
-import { Maximize, Snowflake, Zap } from "lucide-react";
+import {
+  Github,
+  Instagram,
+  Linkedin,
+  Mail,
+  Maximize,
+  Snowflake,
+  Zap,
+} from "lucide-react";
+
+const CONTACT_EMAIL = "info@blackmattertech.com";
+
+const CONTACT_PILLS = [
+  {
+    label: "GitHub",
+    href: "https://github.com/blackmattertech",
+    Icon: Github,
+  },
+  {
+    label: "Email",
+    href: `mailto:${CONTACT_EMAIL}`,
+    Icon: Mail,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/company/blackmattertech",
+    Icon: Linkedin,
+  },
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/blackmattertech",
+    Icon: Instagram,
+  },
+] as const;
 
 const SPLINE_SCENE =
   "https://prod.spline.design/PIgTjpRFA03yfLyK/scene.splinecode";
@@ -14,11 +47,18 @@ const SPECS = [
   { label: "Scale", value: "Multi-industry teams" },
 ] as const;
 
-export default function HeroSection() {
+/**
+ * Site footer: Spline scene + specs + sole “Contact us” entry point (no SiteFooter).
+ */
+export default function SplineFooterSection() {
   const reduce = useReducedMotion();
 
   return (
-    <section className="relative min-h-screen overflow-x-hidden bg-black text-white selection:bg-white selection:text-black">
+    <footer
+      id="spline-footer"
+      className="relative min-h-[min(100svh,900px)] overflow-x-hidden bg-black text-white selection:bg-white selection:text-black"
+      aria-label="Site footer"
+    >
       <div className="absolute inset-0 z-0 bg-[#0a0a0a]">
         <Suspense
           fallback={<div className="h-full w-full bg-black" aria-hidden />}
@@ -39,61 +79,7 @@ export default function HeroSection() {
         />
       </div>
 
-      <nav className="relative z-20 px-4 pt-6 md:px-6 md:pt-10 pointer-events-auto">
-        <div className="liquid-glass mx-auto flex max-w-5xl items-center justify-between rounded-full px-5 py-3 sm:px-6">
-          <div className="flex min-w-0 items-center">
-            <span
-              className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-bold text-white"
-              aria-hidden
-            >
-              BM
-            </span>
-            <span className="ml-2 truncate font-semibold text-sm text-white sm:text-base">
-              <span className="sm:hidden">BlackMatter</span>
-              <span className="hidden sm:inline">BlackMatter Technologies</span>
-            </span>
-            <div className="ml-3 hidden flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-medium text-white/80 md:ml-6 md:flex lg:gap-x-4 lg:text-sm">
-              <a href="#features" className="transition-colors hover:text-white">
-                Services
-              </a>
-              <a
-                href="#tech-insights"
-                className="transition-colors hover:text-white"
-              >
-                Insights
-              </a>
-              <a
-                href="#selected-work"
-                className="transition-colors hover:text-white"
-              >
-                Work
-              </a>
-              <a href="#pricing" className="transition-colors hover:text-white">
-                Pricing
-              </a>
-              <a href="#about" className="transition-colors hover:text-white">
-                About
-              </a>
-            </div>
-          </div>
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
-            <a
-              href="#contact"
-              className="hidden text-sm font-medium text-white/90 transition-colors hover:text-white sm:inline"
-            >
-              Start a project
-            </a>
-            <a
-              href="#contact"
-              className="liquid-glass rounded-full px-4 py-2 text-xs font-medium text-white sm:px-5 sm:text-sm"
-            >
-              Contact
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      <div className="relative z-10 mx-auto flex min-h-[calc(100svh-5.5rem)] flex-col justify-between px-4 pb-6 pt-4 md:min-h-[calc(100svh-7rem)] md:px-6 md:pb-8 md:pt-6 pointer-events-none">
+      <div className="relative z-10 mx-auto flex min-h-[min(100svh,900px)] max-w-6xl flex-col justify-between px-4 pb-10 pt-12 md:px-6 md:pb-14 md:pt-16 pointer-events-none">
         <div className="grid grid-cols-12 gap-6">
           <div className="col-span-12 space-y-6 md:space-y-8">
             <motion.div
@@ -101,22 +87,24 @@ export default function HeroSection() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
-              <h1 className="max-w-xl font-orbitron text-[40px] font-light uppercase leading-[1] tracking-tight text-transparent sm:text-[56px] md:text-[72px] md:leading-[0.9] bg-gradient-to-r from-white/20 via-white/70 to-white bg-clip-text">
+              <p className="mb-2 font-jetbrains text-[10px] uppercase tracking-[0.25em] text-white/45">
                 BlackMatter
+              </p>
+              <h2 className="max-w-xl font-orbitron text-[32px] font-light uppercase leading-[1] tracking-tight text-transparent sm:text-[44px] md:text-[56px] md:leading-[0.95] bg-gradient-to-r from-white/20 via-white/70 to-white bg-clip-text">
+                Systems
                 <br />
-                Technologies •
-              </h1>
+                at a glance •
+              </h2>
             </motion.div>
 
             <motion.p
-              className="max-w-md font-space-grotesk text-sm font-light leading-relaxed text-white"
+              className="max-w-md font-space-grotesk text-sm font-light leading-relaxed text-white/80"
               initial={reduce ? false : { opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.8, delay: reduce ? 0 : 0.2 }}
             >
-              We build intelligent, scalable digital systems for teams who&apos;ve
-              outgrown off-the-shelf tools—from ERP and CRM to integrations and
-              internal platforms. Chaos into systems; code you can grow with.
+              How we build: typed stacks, clear delivery, and production habits
+              you can run long after launch.
             </motion.p>
 
             <motion.div
@@ -147,7 +135,7 @@ export default function HeroSection() {
 
         <div className="mt-16 flex flex-col items-stretch justify-between gap-12 md:mt-0 md:flex-row md:items-end md:gap-0">
           <motion.div
-            className="pointer-events-auto w-full p-6 md:max-w-md md:p-8"
+            className="pointer-events-auto w-full p-2 md:max-w-md md:p-4"
             initial={reduce ? false : { opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: reduce ? 0 : 0.8 }}
@@ -170,31 +158,46 @@ export default function HeroSection() {
                 </div>
               ))}
             </div>
+            <p className="mt-8 border-t border-white/10 pt-6 text-xs text-white/40">
+              © {new Date().getFullYear()} BlackMatter Technologies. All rights
+              reserved.
+            </p>
           </motion.div>
 
           <motion.div
-            className="flex w-full items-center md:w-auto"
+            className="flex w-full flex-col items-stretch gap-3 md:w-auto md:items-end"
             initial={reduce ? false : { opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: reduce ? 0 : 1 }}
           >
-            <div className="pointer-events-auto flex w-full flex-wrap gap-2 rounded-2xl border border-white/5 bg-white/10 p-2 backdrop-blur-md md:w-auto md:rounded-full">
-              <span className="rounded-full bg-white px-4 py-2 font-jetbrains text-[10px] tracking-widest text-black">
-                TS/JS
-              </span>
-              <span className="rounded-full border border-white/20 px-3 py-2 font-jetbrains text-[10px] tracking-widest text-white">
-                50+
-              </span>
-              <span className="rounded-full border border-white/20 px-4 py-2 font-jetbrains text-[10px] tracking-widest text-white">
-                Full-stack
-              </span>
-              <span className="rounded-full border border-white/20 px-4 py-2 font-jetbrains text-[10px] tracking-widest text-white">
-                Cloud-ready
-              </span>
+            <p className="font-jetbrains text-[10px] uppercase tracking-[0.3em] text-white/50">
+              Contact us
+            </p>
+            <div className="pointer-events-auto flex w-full flex-wrap gap-2 rounded-2xl border border-white/5 bg-white/10 p-2 backdrop-blur-md md:w-auto md:justify-end md:rounded-full">
+              {CONTACT_PILLS.map(({ label, href, Icon }) => (
+                <a
+                  key={label}
+                  href={href}
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                  rel={
+                    href.startsWith("http")
+                      ? "noopener noreferrer"
+                      : undefined
+                  }
+                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-2 font-jetbrains text-[10px] tracking-widest transition-colors md:px-4 ${
+                    label === "Email"
+                      ? "border-transparent bg-white text-black hover:bg-white/90"
+                      : "border-white/20 text-white hover:border-white/40 hover:bg-white/5"
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5 shrink-0 opacity-90" aria-hidden />
+                  {label}
+                </a>
+              ))}
             </div>
           </motion.div>
         </div>
       </div>
-    </section>
+    </footer>
   );
 }

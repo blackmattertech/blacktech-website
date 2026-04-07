@@ -5,32 +5,49 @@ import { ImmersiveReveal } from "./motion/ImmersiveReveal";
 const CONTACT_EMAIL = "info@blackmattertech.com";
 const GITHUB_ORG = "https://github.com/blackmattertech";
 
-export default function ContactSection() {
-  const [submitted, setSubmitted] = useState(false);
+const API_BASE = import.meta.env.VITE_API_BASE_URL ?? "";
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+export default function ContactSection() {
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const name = String(fd.get("name") ?? "").trim();
     const email = String(fd.get("email") ?? "").trim();
     const company = String(fd.get("company") ?? "").trim();
     const message = String(fd.get("message") ?? "").trim();
-    const subject = encodeURIComponent(
-      name ? `Inquiry from ${name}` : "Contact — BlackMatter Technologies"
-    );
-    const body = encodeURIComponent(
-      [
-        name && `Name: ${name}`,
-        email && `Email: ${email}`,
-        company && `Company: ${company}`,
-        "",
-        message || "(No message provided)",
-      ]
-        .filter(Boolean)
-        .join("\n")
-    );
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const res = await fetch(`${API_BASE}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, company, message }),
+      });
+      const data = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        ok?: boolean;
+      };
+      if (!res.ok) {
+        setErrorMessage(data.error || "Something went wrong. Please try again.");
+        setStatus("error");
+        return;
+      }
+      setStatus("success");
+      form.reset();
+    } catch {
+      setErrorMessage(
+        "Network error. Check that the contact API is running, then try again."
+      );
+      setStatus("error");
+    }
   }
 
   return (
@@ -104,8 +121,9 @@ export default function ContactSection() {
                     name="name"
                     type="text"
                     required
+                    disabled={status === "loading"}
                     autoComplete="name"
-                    className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none ring-0 placeholder:text-white/35 focus:border-white/25"
+                    className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none ring-0 placeholder:text-white/35 focus:border-white/25 disabled:opacity-50"
                     placeholder="Your name"
                   />
                 </label>
@@ -117,8 +135,9 @@ export default function ContactSection() {
                     name="email"
                     type="email"
                     required
+                    disabled={status === "loading"}
                     autoComplete="email"
-                    className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none ring-0 placeholder:text-white/35 focus:border-white/25"
+                    className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none ring-0 placeholder:text-white/35 focus:border-white/25 disabled:opacity-50"
                     placeholder="you@company.com"
                   />
                 </label>
@@ -130,8 +149,9 @@ export default function ContactSection() {
                 <input
                   name="company"
                   type="text"
+                  disabled={status === "loading"}
                   autoComplete="organization"
-                  className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none ring-0 placeholder:text-white/35 focus:border-white/25"
+                  className="mt-2 w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none ring-0 placeholder:text-white/35 focus:border-white/25 disabled:opacity-50"
                   placeholder="Organization"
                 />
               </label>
@@ -142,33 +162,33 @@ export default function ContactSection() {
                 <textarea
                   name="message"
                   required
+                  disabled={status === "loading"}
                   rows={5}
-                  className="mt-2 w-full resize-y rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none ring-0 placeholder:text-white/35 focus:border-white/25"
+                  className="mt-2 w-full resize-y rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none ring-0 placeholder:text-white/35 focus:border-white/25 disabled:opacity-50"
                   placeholder="Goals, timeline, stack, and anything else we should know."
                 />
               </label>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
                 <button
                   type="submit"
-                  className="rounded-full bg-white px-8 py-3 text-sm font-medium text-black transition-opacity hover:opacity-90"
+                  disabled={status === "loading"}
+                  className="rounded-full bg-white px-8 py-3 text-sm font-medium text-black transition-opacity hover:opacity-90 disabled:opacity-60"
                 >
-                  Send via email
+                  {status === "loading" ? "Sending…" : "Send message"}
                 </button>
                 <p className="text-xs text-white/40">
-                  Opens your mail app with this message addressed to{" "}
-                  {CONTACT_EMAIL}.
+                  We&apos;ll email you a confirmation and reply within 24 hours.
                 </p>
               </div>
-              {submitted && (
-                <p className="mt-4 text-sm text-white/55" role="status">
-                  If your mail client didn&apos;t open, email us directly at{" "}
-                  <a
-                    href={`mailto:${CONTACT_EMAIL}`}
-                    className="text-white underline-offset-2 hover:underline"
-                  >
-                    {CONTACT_EMAIL}
-                  </a>
-                  .
+              {status === "success" && (
+                <p className="mt-4 text-sm text-white/80" role="status">
+                  Thanks — check your inbox for a confirmation. Our team will
+                  respond within <span className="text-white">24 hours</span>.
+                </p>
+              )}
+              {status === "error" && errorMessage && (
+                <p className="mt-4 text-sm text-red-300/90" role="alert">
+                  {errorMessage}
                 </p>
               )}
             </form>

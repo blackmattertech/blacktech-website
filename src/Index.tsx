@@ -4,8 +4,7 @@ import AboutSection from "./components/AboutSection";
 import CompanyStatsSection from "./components/CompanyStatsSection";
 import FeaturedVideoSection from "./components/FeaturedVideoSection";
 import ContactSection from "./components/ContactSection";
-import SiteFooter from "./components/SiteFooter";
-import HeroSection from "./components/HeroSection";
+import SplineFooterSection from "./components/SplineFooterSection";
 import LoadingScreen from "./components/LoadingScreen";
 import MarqueeStrip from "./components/MarqueeStrip";
 import OrbisLabsVideoSection from "./components/OrbisLabsVideoSection";
@@ -31,10 +30,9 @@ export default function Index() {
         <LoadingScreen onComplete={() => setIsLoading(false)} />
       )}
       <div className="min-h-screen bg-black text-white">
-        <HeroSection />
+        <OrbisLabsVideoSection />
 
         <AboutSection />
-        <OrbisLabsVideoSection />
         <SelectedWorkBento />
         <FeaturedVideoSection />
         <PhilosophySection />
@@ -46,7 +44,7 @@ export default function Index() {
         <SpaceCTASection />
         <MarqueeStrip />
         <ContactSection />
-        <SiteFooter />
+        <SplineFooterSection />
       </div>
     </>
   );

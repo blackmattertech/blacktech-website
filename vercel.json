@@ -1,0 +1,7 @@
+{
+  "functions": {
+    "api/contact.mjs": {
+      "includeFiles": "server/mailjet-send.mjs"
+    }
+  }
+}
