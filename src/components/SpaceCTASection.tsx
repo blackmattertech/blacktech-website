@@ -1,83 +1,108 @@
 import { Github, Mail, MessageSquare } from "lucide-react";
-import PageContainer from "./layout/PageContainer";
 
 const VIDEO =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_055729_72d66327-b59e-4ae9-bb70-de6ccb5ecdb0.mp4";
 
+const CTA_LINES = [
+  "Ship",
+  "systems",
+  "your",
+  "operators",
+  "trust.",
+  "Scale",
+  "with",
+  "clarity.",
+] as const;
+
 export default function SpaceCTASection() {
   return (
-    <section id="space-cta" className="relative bg-space text-cream">
+    <section
+      id="space-cta"
+      className="relative bg-space text-cream"
+      aria-labelledby="space-cta-heading"
+    >
       <div className="relative w-full">
         <video
-          className="block h-auto w-full"
+          className="block h-auto min-h-[360px] w-full object-cover sm:min-h-[420px] lg:min-h-[480px]"
           src={VIDEO}
           autoPlay
           muted
           loop
           playsInline
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-space/80 via-transparent to-space/40" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-space/90 via-space/55 to-space/75" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-space/85 via-transparent to-space/45" />
 
-        <div className="absolute inset-0 flex items-center justify-end">
-          <PageContainer className="relative h-full w-full">
-            <div className="absolute right-0 top-1/2 w-full max-w-xl -translate-y-1/2 px-4 text-right lg:pr-[20%] lg:pl-[15%]">
-              <p
-                className="pointer-events-none absolute -left-2 -top-8 font-condiment normal-case text-[17px] text-neon mix-blend-exclusion sm:-top-10 sm:text-2xl md:text-4xl lg:-top-16 lg:text-5xl xl:text-[68px]"
-              >
-                Go beyond
-              </p>
-              <h2 className="font-grotesk text-base uppercase leading-tight sm:text-xl md:text-3xl lg:text-4xl xl:text-[60px]">
-                <span className="mb-4 block sm:mb-8 lg:mb-12">
+        <div className="absolute inset-0 z-10 flex min-h-[min(70vh,640px)] items-center">
+          <div className="mx-auto w-full max-w-6xl px-6 py-14 md:py-20 lg:py-24">
+            <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
+              <div className="flex justify-center lg:col-span-4 lg:justify-start xl:col-span-5">
+                <div
+                  className="flex w-full max-w-[15rem] flex-col overflow-hidden rounded-xl border border-white/15 bg-black/30 shadow-[0_0_40px_rgba(0,0,0,0.45)] backdrop-blur-md sm:max-w-[14.375rem] lg:rounded-2xl"
+                  role="navigation"
+                  aria-label="Contact and social"
+                >
+                  {(
+                    [
+                      {
+                        Icon: Mail,
+                        label: "Email",
+                        href: "mailto:info@blackmattertech.com",
+                        external: false,
+                      },
+                      {
+                        Icon: Github,
+                        label: "GitHub",
+                        href: "https://github.com/blackmattertech",
+                        external: true,
+                      },
+                      {
+                        Icon: MessageSquare,
+                        label: "Contact form",
+                        href: "#contact",
+                        external: false,
+                      },
+                    ] as const
+                  ).map(({ Icon, label, href, external }, i) => (
+                    <a
+                      key={label}
+                      href={href}
+                      {...(external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                      className={`flex h-16 items-center justify-center text-cream transition-colors hover:bg-white/10 sm:h-[4.25rem] lg:h-[4.5rem] ${
+                        i < 2 ? "border-b border-white/10" : ""
+                      }`}
+                      aria-label={label}
+                    >
+                      <Icon
+                        className="h-6 w-6 sm:h-7 sm:w-7"
+                        strokeWidth={1.75}
+                      />
+                    </a>
+                  ))}
+                </div>
+              </div>
+
+              <div className="relative text-center lg:col-span-8 lg:pr-4 lg:text-right xl:col-span-7 xl:pr-8">
+                <p
+                  className="mb-2 font-condiment text-xl normal-case text-neon mix-blend-exclusion sm:text-3xl md:text-4xl lg:mb-3 lg:text-5xl xl:text-[clamp(2.5rem,4vw,4.25rem)]"
+                  id="space-cta-heading"
+                >
+                  Go beyond
+                </p>
+                <h2 className="font-grotesk text-2xl uppercase leading-none tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-[clamp(3rem,5.5vw,4.5rem)]">
                   Work with us.
-                </span>
-                Ship systems your
-                <br />
-                operators trust.
-                <br />
-                Scale with clarity.
-              </h2>
+                </h2>
+                <div className="mt-8 font-grotesk text-lg uppercase leading-[1.05] tracking-tight text-cream/95 sm:text-xl md:text-2xl lg:mt-10 lg:text-3xl xl:text-4xl">
+                  {CTA_LINES.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
+                </div>
+              </div>
             </div>
-          </PageContainer>
-        </div>
-
-        <div className="absolute bottom-[12%] left-[8%] sm:bottom-[15%] lg:bottom-[20%]">
-          <div className="liquid-glass flex flex-col overflow-hidden rounded-[0.5rem] sm:rounded-xl lg:rounded-[1.25rem]">
-            {(
-              [
-                {
-                  Icon: Mail,
-                  label: "Email",
-                  href: "mailto:info@blackmattertech.com",
-                  external: false,
-                },
-                {
-                  Icon: Github,
-                  label: "GitHub",
-                  href: "https://github.com/blackmattertech",
-                  external: true,
-                },
-                {
-                  Icon: MessageSquare,
-                  label: "Contact",
-                  href: "#contact",
-                  external: false,
-                },
-              ] as const
-            ).map(({ Icon, label, href, external }, i) => (
-              <a
-                key={label}
-                href={href}
-                {...(external
-                  ? { target: "_blank", rel: "noopener noreferrer" }
-                  : {})}
-                className={`flex items-center justify-center text-cream transition-colors hover:bg-white/10 ${
-                  i < 2 ? "border-b border-white/10" : ""
-                } h-12 w-[14vw] sm:h-14 sm:w-[14.375rem] md:h-16 md:w-[10.78125rem] lg:h-[4.5rem] lg:w-[16.77rem]`}
-                aria-label={label}
-              >
-                <Icon className="h-5 w-5" />
-              </a>
-            ))}
           </div>
         </div>
       </div>
