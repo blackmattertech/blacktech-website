@@ -1,20 +1,18 @@
-import { Github, Mail, MessageSquare } from "lucide-react";
-import PageContainer from "./layout/PageContainer";
+import { ArrowRight, GithubIcon, Mail } from "lucide-react";
 import StickySiteNav from "./StickySiteNav";
 
 const VIDEO =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_045634_e1c98c76-1265-4f5c-882a-4276f2080894.mp4";
 
-/**
- * Full-viewport hero: space video, headline, neon tagline, vertical contact stack.
- */
 export default function OrbisLabsVideoSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen scroll-mt-16 overflow-hidden rounded-b-[32px] bg-black text-white"
+      className="relative min-h-screen overflow-hidden rounded-b-[2.5rem] bg-black text-white"
     >
       <StickySiteNav />
+
+      {/* Background video */}
       <video
         className="absolute inset-0 z-0 h-full w-full object-cover"
         src={VIDEO}
@@ -23,46 +21,75 @@ export default function OrbisLabsVideoSection() {
         loop
         playsInline
       />
-      <div className="absolute inset-0 z-[1] bg-black/50" />
+      {/* Layered overlays for depth */}
+      <div className="absolute inset-0 z-[1] bg-black/40" />
+      <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-black via-transparent to-transparent" />
 
-      <div className="absolute right-4 top-[5.5rem] z-20 flex flex-col gap-3 sm:right-6 sm:top-24 md:top-28 lg:top-32 xl:right-8">
-        <a
-          href="mailto:info@blackmattertech.com"
-          className="liquid-glass flex h-12 w-12 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-[1rem]"
-          aria-label="Email BlackMatter Technologies"
-        >
-          <Mail className="h-5 w-5" />
-        </a>
-        <a
-          href="https://github.com/blackmattertech"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="liquid-glass flex h-12 w-12 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-[1rem]"
-          aria-label="BlackMatter Technologies on GitHub"
-        >
-          <Github className="h-5 w-5" />
-        </a>
-        <a
-          href="#contact"
-          className="liquid-glass flex h-12 w-12 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-[1rem]"
-          aria-label="Contact form"
-        >
-          <MessageSquare className="h-5 w-5" />
-        </a>
-      </div>
+      {/* Main content */}
+      <div className="relative z-10 mx-auto flex min-h-screen max-w-6xl flex-col justify-end px-6 pb-20 md:px-8 md:pb-28">
+        <div className="max-w-4xl">
+          {/* Eyebrow */}
+          <div className="mb-6 flex items-center gap-3">
+            <span className="h-px w-8 bg-neon" />
+            <span className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/50">
+              BlackMatter Technologies
+            </span>
+          </div>
 
-      <PageContainer className="relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-center py-20 pb-28 sm:py-24 sm:pb-32 lg:min-h-screen lg:py-28 lg:pb-40">
-        <div className="relative max-w-[min(100%,920px)] pr-14 sm:pr-4 lg:ml-8 lg:max-w-[880px] xl:ml-16">
-          <h1 className="font-grotesk text-[clamp(1.35rem,4.2vw,3.35rem)] uppercase leading-[1.02] tracking-tight sm:leading-[0.98] md:text-[clamp(1.75rem,4.5vw,4.25rem)] lg:text-[clamp(2.25rem,4.8vw,5.5rem)]">
-            Custom software for teams who&apos;ve outgrown off-the-shelf
+          {/* Main headline */}
+          <h1 className="font-grotesk text-[clamp(2.5rem,7vw,6rem)] uppercase leading-[0.95] tracking-tight">
+            Transforming
+            <br />
+            <span className="text-white/30">chaos into</span>
+            <br />
+            systems.
           </h1>
-          <div className="pointer-events-none mt-5 max-w-md sm:mt-6 lg:absolute lg:right-0 lg:top-1/2 lg:mt-0 lg:max-w-[min(100%,15rem)] lg:-translate-y-1/2 lg:translate-x-[2%] xl:max-w-xs xl:translate-x-[8%]">
-            <p className="-rotate-1 font-condiment text-2xl normal-case leading-tight text-neon opacity-95 mix-blend-exclusion sm:text-3xl md:text-4xl lg:text-[clamp(2rem,3.5vw,3rem)] xl:text-[48px]">
-              Chaos into systems
-            </p>
+
+          {/* Subheadline */}
+          <p className="mt-8 max-w-xl text-base leading-relaxed text-white/55 md:text-lg">
+            Custom software for complex operations — ERP, integrations, CRM,
+            and internal platforms built exactly to how your business runs.
+          </p>
+
+          {/* CTAs */}
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <a
+              href="#contact"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-medium text-black transition-opacity hover:opacity-90"
+            >
+              Start a project
+              <ArrowRight className="h-4 w-4" />
+            </a>
+            <a
+              href="#selected-work"
+              className="inline-flex items-center gap-2 rounded-full border border-white/20 px-7 py-3.5 text-sm font-medium text-white/80 transition-all hover:border-white/40 hover:text-white"
+            >
+              View our work
+            </a>
+          </div>
+
+          {/* Social links */}
+          <div className="mt-12 flex items-center gap-4">
+            <a
+              href="mailto:info@blackmattertech.com"
+              className="flex items-center gap-2 text-xs text-white/35 transition-colors hover:text-white/70"
+            >
+              <Mail className="h-3.5 w-3.5" />
+              info@blackmattertech.com
+            </a>
+            <span className="h-3 w-px bg-white/15" />
+            <a
+              href="https://github.com/blackmattertech"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-xs text-white/35 transition-colors hover:text-white/70"
+            >
+              <GithubIcon className="h-3.5 w-3.5" />
+              github.com/blackmattertech
+            </a>
           </div>
         </div>
-      </PageContainer>
+      </div>
     </section>
   );
 }

@@ -2,7 +2,7 @@ import gsap from "gsap";
 import { useLayoutEffect, useRef } from "react";
 
 const CHUNK =
-  "BLACKMATTER TECHNOLOGIES • CHAOS INTO SYSTEMS • INTELLIGENT DIGITAL SYSTEMS • ";
+  "BLACKMATTER TECHNOLOGIES • TRANSFORMING CHAOS INTO SYSTEMS • CUSTOM SOFTWARE FOR COMPLEX OPERATIONS • ";
 
 export default function MarqueeStrip() {
   const trackRef = useRef<HTMLDivElement>(null);

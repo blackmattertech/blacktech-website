@@ -49,7 +49,7 @@ export default function SystemsCollectionSection() {
                 <span className="font-mono text-[10px] text-white/30">03</span>
                 <div className="h-px w-8 bg-white/15" />
                 <span className="text-xs uppercase tracking-[0.3em] text-white/40">
-                  Systems
+                  What we ship
                 </span>
               </div>
               <h2 className="mt-6 font-display text-4xl leading-tight text-white md:text-5xl lg:text-6xl">
