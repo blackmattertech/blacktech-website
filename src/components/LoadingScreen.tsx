@@ -37,9 +37,9 @@ export default function LoadingScreen({
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[9999] flex flex-col bg-folio-bg text-folio-text">
+    <div className="fixed inset-0 z-[9999] flex flex-col bg-black text-white">
       <motion.p
-        className="absolute left-6 top-8 text-xs uppercase tracking-[0.3em] text-folio-muted md:left-10 md:top-10"
+        className="absolute left-6 top-8 text-xs uppercase tracking-[0.3em] text-white/45 md:left-10 md:top-10"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
@@ -56,7 +56,7 @@ export default function LoadingScreen({
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.35 }}
-              className="absolute inset-0 flex items-center justify-center text-center font-display text-4xl italic text-folio-text/80 md:text-6xl lg:text-7xl"
+              className="absolute inset-0 flex items-center justify-center text-center font-display text-4xl italic text-white/80 md:text-6xl lg:text-7xl"
             >
               {WORDS[wordIndex]}
             </motion.p>
@@ -68,14 +68,14 @@ export default function LoadingScreen({
         <p className="font-display text-6xl tabular-nums md:text-8xl lg:text-9xl">
           {String(count).padStart(3, "0")}
         </p>
-        <div className="mt-4 h-[3px] w-full max-w-md overflow-hidden rounded-full bg-folio-line/50">
+        <div className="mt-4 h-[3px] w-full max-w-md overflow-hidden rounded-full bg-white/10">
           <motion.div
             className="h-full w-full origin-left rounded-full accent-gradient"
             initial={false}
             animate={{ scaleX: count / 100 }}
             transition={{ duration: 0.05 }}
             style={{
-              boxShadow: "0 0 8px rgba(137, 170, 204, 0.35)",
+              boxShadow: "0 0 10px rgba(111, 255, 0, 0.45)",
             }}
           />
         </div>

@@ -11,16 +11,22 @@
   .text-glow {
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
   }
+  .text-glow-neon {
+    text-shadow: 0 0 16px rgba(111, 255, 0, 0.55);
+  }
+  .section-divider {
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+  }
 }
 
 @layer base {
   :root {
-    --folio-bg: 0 0% 4%;
-    --folio-surface: 0 0% 8%;
-    --folio-text: 0 0% 96%;
-    --folio-muted: 0 0% 53%;
-    --folio-line: 0 0% 12%;
-    --folio-accent: 0 0% 96%;
+    --folio-bg: 0 0% 0%;
+    --folio-surface: 0 0% 5%;
+    --folio-text: 0 0% 100%;
+    --folio-muted: 0 0% 45%;
+    --folio-line: 0 0% 8%;
+    --folio-accent: 0 0% 100%;
   }
 }
 
@@ -58,7 +64,7 @@
   }
 
   .accent-gradient {
-    background: linear-gradient(90deg, #89aacc 0%, #4e85bf 100%);
+    background: linear-gradient(90deg, #6fff00 0%, #3dd400 100%);
   }
 
 }

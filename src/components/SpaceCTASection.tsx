@@ -18,7 +18,7 @@ export default function SpaceCTASection() {
   return (
     <section
       id="space-cta"
-      className="relative bg-space text-cream"
+      className="relative bg-black text-white"
       aria-labelledby="space-cta-heading"
     >
       <div className="relative w-full">
@@ -30,11 +30,11 @@ export default function SpaceCTASection() {
           loop
           playsInline
         />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-space/90 via-space/55 to-space/75" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-space/85 via-transparent to-space/45" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/90 via-black/55 to-black/75" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/45" />
 
         <div className="absolute inset-0 z-10 flex min-h-[min(70vh,640px)] items-center">
-          <div className="mx-auto w-full max-w-6xl px-6 py-14 md:py-20 lg:py-24">
+          <div className="mx-auto w-full max-w-6xl px-6 py-20 md:px-8 md:py-28">
             <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12 lg:gap-x-12 lg:gap-y-0">
               <div className="flex justify-center lg:col-span-4 lg:justify-start xl:col-span-5">
                 <div
@@ -70,7 +70,7 @@ export default function SpaceCTASection() {
                       {...(external
                         ? { target: "_blank", rel: "noopener noreferrer" }
                         : {})}
-                      className={`flex h-16 items-center justify-center text-cream transition-colors hover:bg-white/10 sm:h-[4.25rem] lg:h-[4.5rem] ${
+                      className={`flex h-16 items-center justify-center text-white transition-colors hover:bg-white/10 sm:h-[4.25rem] lg:h-[4.5rem] ${
                         i < 2 ? "border-b border-white/10" : ""
                       }`}
                       aria-label={label}
@@ -94,7 +94,7 @@ export default function SpaceCTASection() {
                 <h2 className="font-grotesk text-2xl uppercase leading-none tracking-tight sm:text-4xl md:text-5xl lg:text-6xl xl:text-[clamp(3rem,5.5vw,4.5rem)]">
                   Work with us.
                 </h2>
-                <div className="mt-8 font-grotesk text-lg uppercase leading-[1.05] tracking-tight text-cream/95 sm:text-xl md:text-2xl lg:mt-10 lg:text-3xl xl:text-4xl">
+                <div className="mt-8 font-grotesk text-lg uppercase leading-[1.05] tracking-tight text-white/95 sm:text-xl md:text-2xl lg:mt-10 lg:text-3xl xl:text-4xl">
                   {CTA_LINES.map((line) => (
                     <span key={line} className="block">
                       {line}

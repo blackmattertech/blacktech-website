@@ -12,7 +12,7 @@ export default function OrbisLabsVideoSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen scroll-mt-16 overflow-hidden rounded-b-[32px] bg-space text-cream"
+      className="relative min-h-screen scroll-mt-16 overflow-hidden rounded-b-[32px] bg-black text-white"
     >
       <StickySiteNav />
       <video
@@ -23,12 +23,12 @@ export default function OrbisLabsVideoSection() {
         loop
         playsInline
       />
-      <div className="absolute inset-0 z-[1] bg-space/45" />
+      <div className="absolute inset-0 z-[1] bg-black/50" />
 
       <div className="absolute right-4 top-[5.5rem] z-20 flex flex-col gap-3 sm:right-6 sm:top-24 md:top-28 lg:top-32 xl:right-8">
         <a
           href="mailto:info@blackmattertech.com"
-          className="liquid-glass flex h-12 w-12 items-center justify-center rounded-xl text-cream transition-colors hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-[1rem]"
+          className="liquid-glass flex h-12 w-12 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-[1rem]"
           aria-label="Email BlackMatter Technologies"
         >
           <Mail className="h-5 w-5" />
@@ -37,14 +37,14 @@ export default function OrbisLabsVideoSection() {
           href="https://github.com/blackmattertech"
           target="_blank"
           rel="noopener noreferrer"
-          className="liquid-glass flex h-12 w-12 items-center justify-center rounded-xl text-cream transition-colors hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-[1rem]"
+          className="liquid-glass flex h-12 w-12 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-[1rem]"
           aria-label="BlackMatter Technologies on GitHub"
         >
           <Github className="h-5 w-5" />
         </a>
         <a
           href="#contact"
-          className="liquid-glass flex h-12 w-12 items-center justify-center rounded-xl text-cream transition-colors hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-[1rem]"
+          className="liquid-glass flex h-12 w-12 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-[1rem]"
           aria-label="Contact form"
         >
           <MessageSquare className="h-5 w-5" />

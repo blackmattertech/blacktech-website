@@ -4,11 +4,11 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-black px-6 pb-10 pt-32 md:pb-14 md:pt-44"
+      className="relative overflow-hidden bg-black py-20 md:py-28"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,0.03)_0%,_transparent_70%)]" />
 
-      <div className="relative mx-auto max-w-6xl">
+      <div className="relative mx-auto max-w-6xl px-6 md:px-8">
         <ImmersiveReveal>
           <p className="text-sm uppercase tracking-widest text-white/40">
             About Us

@@ -14,7 +14,7 @@ export default function PhilosophySection() {
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(255,255,255,0.05)_0%,_transparent_55%)]" />
 
-      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-7xl items-center px-6 lg:px-8">
+      <div className="relative z-10 mx-auto flex min-h-[calc(100vh-4rem)] w-full max-w-6xl items-center px-6 md:px-8">
         <div className="max-w-xl py-16 lg:py-0 lg:pr-8">
           <p className="mb-3 text-xs font-medium uppercase tracking-[0.2em] text-white/45">
             BlackMatter Technologies

@@ -53,9 +53,9 @@ export default function ContactSection() {
   return (
     <section
       id="contact"
-      className="scroll-mt-24 border-t border-white/10 bg-black px-6 py-20 md:py-28"
+      className="scroll-mt-24 border-t border-white/[0.07] bg-black py-20 md:py-28"
     >
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-6xl px-6 md:px-8">
         <ImmersiveReveal>
           <p className="text-sm uppercase tracking-widest text-white/40">
             Contact
