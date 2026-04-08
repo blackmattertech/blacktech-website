@@ -12,6 +12,7 @@ import PhilosophySection from "./components/PhilosophySection";
 import SelectedWorkBento from "./components/SelectedWorkBento";
 import ServicesSection from "./components/ServicesSection";
 import SpaceCTASection from "./components/SpaceCTASection";
+import SocialSpreadCard from "./components/SocialSpreadCard";
 import SpaceIntroSection from "./components/SpaceIntroSection";
 import SystemsCollectionSection from "./components/SystemsCollectionSection";
 import TechInsightsSection from "./components/TechInsightsSection";
@@ -30,6 +31,7 @@ export default function Index() {
         <LoadingScreen onComplete={() => setIsLoading(false)} />
       )}
       <div className="min-h-screen bg-black text-white">
+        <SocialSpreadCard />
         <OrbisLabsVideoSection />
 
         <AboutSection />

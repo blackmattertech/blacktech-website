@@ -12,7 +12,7 @@ export default function OrbisLabsVideoSection() {
   return (
     <section
       id="hero"
-      className="relative min-h-screen scroll-mt-16 overflow-hidden rounded-b-[32px] bg-black text-white"
+      className="relative min-h-dvh scroll-mt-16 overflow-hidden rounded-b-2xl bg-black text-white sm:rounded-b-[32px]"
     >
       <StickySiteNav />
       <video
@@ -25,7 +25,7 @@ export default function OrbisLabsVideoSection() {
       />
       <div className="absolute inset-0 z-[1] bg-black/50" />
 
-      <div className="absolute right-4 top-[5.5rem] z-20 flex flex-col gap-3 sm:right-6 sm:top-24 md:top-28 lg:top-32 xl:right-8">
+      <div className="absolute right-4 top-[5.5rem] z-20 flex flex-col gap-3 sm:right-6 md:hidden xl:right-8">
         <a
           href="mailto:info@blackmattertech.com"
           className="liquid-glass flex h-12 w-12 items-center justify-center rounded-xl text-white transition-colors hover:bg-white/10 sm:h-14 sm:w-14 sm:rounded-[1rem]"
@@ -51,14 +51,14 @@ export default function OrbisLabsVideoSection() {
         </a>
       </div>
 
-      <PageContainer className="relative z-10 flex min-h-[calc(100svh-4rem)] flex-col justify-center py-20 pb-28 sm:py-24 sm:pb-32 lg:min-h-screen lg:py-28 lg:pb-40">
-        <div className="relative max-w-[min(100%,920px)] pr-14 sm:pr-4 lg:ml-8 lg:max-w-[880px] xl:ml-16">
-          <h1 className="font-grotesk text-[clamp(1.35rem,4.2vw,3.35rem)] uppercase leading-[1.02] tracking-tight sm:leading-[0.98] md:text-[clamp(1.75rem,4.5vw,4.25rem)] lg:text-[clamp(2.25rem,4.8vw,5.5rem)]">
+      <PageContainer className="relative z-10 flex min-h-dvh w-full !max-w-none flex-col justify-center px-4 py-14 pb-16 pt-[max(5.5rem,calc(env(safe-area-inset-top,0px)+4.25rem))] sm:px-6 sm:py-20 sm:pb-20 md:px-8 md:py-24 lg:px-10 lg:py-28 xl:px-12 xl:py-32">
+        <div className="relative w-full max-w-none max-md:pr-12 sm:max-md:pr-14">
+          <h1 className="font-grotesk w-full max-w-none text-balance uppercase leading-[1.1] tracking-[-0.02em] text-white sm:leading-[1.08] md:leading-[1.06] lg:leading-[1.05] xl:leading-[1.04] text-[clamp(1.875rem,calc(6.5vw+1.1rem),3.75rem)] sm:text-[clamp(2.125rem,calc(7.5vw+0.75rem),4.5rem)] md:text-[clamp(2.5rem,calc(8vw+0.85rem),5.75rem)] lg:text-[clamp(3rem,calc(8.5vw+0.5rem),7rem)] xl:text-[clamp(3.5rem,calc(9vw+0.25rem),8rem)] 2xl:text-[clamp(4rem,calc(9.5vw+0.5rem),9.5rem)]">
             Custom software for teams who&apos;ve outgrown off-the-shelf
           </h1>
-          <div className="pointer-events-none mt-5 max-w-md sm:mt-6 lg:absolute lg:right-0 lg:top-1/2 lg:mt-0 lg:max-w-[min(100%,15rem)] lg:-translate-y-1/2 lg:translate-x-[2%] xl:max-w-xs xl:translate-x-[8%]">
-            <p className="-rotate-1 font-condiment text-2xl normal-case leading-tight text-neon opacity-95 mix-blend-exclusion sm:text-3xl md:text-4xl lg:text-[clamp(2rem,3.5vw,3rem)] xl:text-[48px]">
-              Chaos into systems
+          <div className="pointer-events-none mt-8 w-full max-w-[min(100%,42rem)] sm:mt-10 md:mt-12 md:max-w-[min(100%,48rem)] lg:max-w-[min(100%,56rem)]">
+            <p className="-rotate-1 font-condiment normal-case leading-snug text-neon opacity-95 mix-blend-exclusion sm:leading-normal text-[clamp(1.35rem,calc(3.8vw+0.65rem),2.25rem)] sm:text-[clamp(1.5rem,calc(4.2vw+0.5rem),2.75rem)] md:text-[clamp(1.75rem,calc(4.5vw+0.5rem),3.25rem)] lg:text-[clamp(2rem,calc(4.8vw+0.25rem),3.75rem)] xl:text-[clamp(2.25rem,5vw,4.25rem)]">
+              Transforming Chaos into Systems
             </p>
           </div>
         </div>

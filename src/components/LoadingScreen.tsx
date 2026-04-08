@@ -38,14 +38,21 @@ export default function LoadingScreen({
 
   return (
     <div className="fixed inset-0 z-[9999] flex flex-col bg-black text-white">
-      <motion.p
-        className="absolute left-6 top-8 text-xs uppercase tracking-[0.3em] text-white/45 md:left-10 md:top-10"
+      <motion.div
+        className="absolute left-6 top-6 md:left-10 md:top-8"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        BlackMatter
-      </motion.p>
+        <img
+          src="/logo.svg"
+          alt="BlackMatter Technologies"
+          className="h-12 w-auto max-w-[min(72vw,15rem)] object-contain object-left sm:h-14 sm:max-w-[17rem] md:h-16 md:max-w-[19rem]"
+          width={385}
+          height={102}
+          decoding="async"
+        />
+      </motion.div>
 
       <div className="flex flex-1 flex-col items-center justify-center px-6">
         <div className="relative h-[4.5rem] w-full max-w-xl md:h-[5.5rem]">

@@ -10,24 +10,53 @@ export default function AboutSection() {
 
       <div className="relative mx-auto max-w-6xl px-6 md:px-8">
         <ImmersiveReveal>
-          <p className="text-sm uppercase tracking-widest text-white/40">
-            About Us
-          </p>
+          <div className="mb-2 text-left">
+            <p
+              className="font-grotesk uppercase leading-[0.92] tracking-tight text-white"
+              style={{
+                fontSize: "clamp(2.75rem, 11vw, 5.75rem)",
+              }}
+            >
+              HELLO!
+            </p>
+            <p
+              className="font-grotesk uppercase leading-[0.92] tracking-tight text-white"
+              style={{
+                fontSize: "clamp(2.75rem, 11vw, 5.75rem)",
+                marginTop: "-0.04em",
+              }}
+            >
+              WE&apos;RE BLACKMATTER
+            </p>
+            <p
+              className="font-yellowtail font-normal normal-case leading-none text-neon"
+              style={{
+                fontSize: "clamp(2.25rem, 7vw, 4.25rem)",
+                marginTop: "0.02em",
+                /* ~width of "WE'RE " in Anton at this scale — aligns T under B */
+                paddingLeft: "clamp(3.1rem, 17.5vw, 8.35rem)",
+              }}
+            >
+              Technologies
+            </p>
+          </div>
         </ImmersiveReveal>
 
-        <ImmersiveReveal delay={0.06} intensity="deep" className="mt-6 block">
+        <ImmersiveReveal delay={0.06} intensity="deep" className="mt-10 block md:mt-12">
           <h2
             className="text-4xl leading-[1.1] tracking-tight text-white md:text-6xl lg:text-7xl"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
-            <span className="italic text-white/60">BlackMatter Technologies</span>{" "}
-            builds software that simplifies complex operations—replacing
-            spreadsheets, brittle integrations, and{" "}
-            <span className="italic text-white/60">chaos</span>
+            <span className="italic text-white/60">We</span>{" "}
+            build software that simplifies{" "}
+            <span className="italic text-neon">complex operations</span>
+            —replacing spreadsheets, brittle integrations, and{" "}
+            <span className="italic text-neon">chaos</span>
             <br className="hidden sm:block" />
             <span className="italic text-white/60">
-              with systems shaped to how your business actually runs.
+              with systems shaped to how your business{" "}
             </span>
+            <span className="italic text-neon">actually runs.</span>
           </h2>
         </ImmersiveReveal>
 

@@ -1,5 +1,7 @@
 import { lazy, Suspense } from "react";
 import { motion, useReducedMotion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { resetCookieConsentAndReload } from "../constants/cookieConsent";
 import {
   Github,
   Instagram,
@@ -158,7 +160,43 @@ export default function SplineFooterSection() {
                 </div>
               ))}
             </div>
-            <p className="mt-8 border-t border-white/10 pt-6 text-xs text-white/40">
+            <nav
+              className="pointer-events-auto mt-8 flex flex-wrap gap-x-5 gap-y-2 border-t border-white/10 pt-6 text-[10px] uppercase tracking-[0.2em] text-white/50"
+              aria-label="Legal and policies"
+            >
+              <Link
+                to="/policies"
+                className="transition-colors hover:text-white"
+              >
+                Our policies
+              </Link>
+              <Link
+                to="/policies?tab=cookies"
+                className="transition-colors hover:text-white"
+              >
+                Cookies
+              </Link>
+              <Link
+                to="/policies?tab=privacy"
+                className="transition-colors hover:text-white"
+              >
+                Privacy
+              </Link>
+              <Link
+                to="/policies?tab=terms"
+                className="transition-colors hover:text-white"
+              >
+                Terms
+              </Link>
+              <button
+                type="button"
+                className="transition-colors hover:text-white"
+                onClick={resetCookieConsentAndReload}
+              >
+                Cookie settings
+              </button>
+            </nav>
+            <p className="mt-4 text-xs text-white/40">
               © {new Date().getFullYear()} BlackMatter Technologies. All rights
               reserved.
             </p>

@@ -11,6 +11,7 @@ export default {
         body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
         grotesk: ["Anton", "sans-serif"],
         condiment: ["Condiment", "cursive"],
+        yellowtail: ["Yellowtail", "cursive"],
         orbitron: ["Orbitron", "ui-sans-serif", "system-ui", "sans-serif"],
         "space-grotesk": [
           "Space Grotesk",

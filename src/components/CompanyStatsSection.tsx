@@ -33,7 +33,7 @@ export default function CompanyStatsSection() {
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8 }}
         >
-          {STATS.map((s, i) => (
+          {STATS.map((s) => (
             <div
               key={s.label}
               className="border-t border-white/[0.08] pt-6 md:border-l md:border-t-0 md:pl-8 md:pt-0 first:md:border-l-0 first:md:pl-0"
