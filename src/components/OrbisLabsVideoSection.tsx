@@ -52,12 +52,12 @@ export default function OrbisLabsVideoSection() {
       </div>
 
       <PageContainer className="relative z-10 flex min-h-dvh w-full !max-w-none flex-col justify-center px-4 py-14 pb-16 pt-[max(5.5rem,calc(env(safe-area-inset-top,0px)+4.25rem))] sm:px-6 sm:py-20 sm:pb-20 md:px-8 md:py-24 lg:px-10 lg:py-28 xl:px-12 xl:py-32">
-        <div className="relative w-full max-w-none max-md:pr-12 sm:max-md:pr-14">
-          <h1 className="font-grotesk w-full max-w-none text-balance uppercase leading-[1.1] tracking-[-0.02em] text-white sm:leading-[1.08] md:leading-[1.06] lg:leading-[1.05] xl:leading-[1.04] text-[clamp(1.875rem,calc(6.5vw+1.1rem),3.75rem)] sm:text-[clamp(2.125rem,calc(7.5vw+0.75rem),4.5rem)] md:text-[clamp(2.5rem,calc(8vw+0.85rem),5.75rem)] lg:text-[clamp(3rem,calc(8.5vw+0.5rem),7rem)] xl:text-[clamp(3.5rem,calc(9vw+0.25rem),8rem)] 2xl:text-[clamp(4rem,calc(9.5vw+0.5rem),9.5rem)]">
+        <div className="relative mt-4 w-full max-w-none max-md:pr-12 sm:mt-6 sm:max-md:pr-14 md:mt-8">
+          <h1 className="font-grotesk w-full max-w-none text-balance uppercase leading-[1.1] tracking-[-0.02em] text-white sm:leading-[1.08] md:leading-[1.06] lg:leading-[1.05] xl:leading-[1.04] text-[clamp(1.406rem,calc(4.875vw+0.825rem),2.813rem)] sm:text-[clamp(1.594rem,calc(5.625vw+0.563rem),3.375rem)] md:text-[clamp(1.875rem,calc(6vw+0.638rem),4.313rem)] lg:text-[clamp(2.25rem,calc(6.375vw+0.375rem),5.25rem)] xl:text-[clamp(2.625rem,calc(6.75vw+0.188rem),6rem)] 2xl:text-[clamp(3rem,calc(7.125vw+0.375rem),7.125rem)]">
             Custom software for teams who&apos;ve outgrown off-the-shelf
           </h1>
           <div className="pointer-events-none mt-8 w-full max-w-[min(100%,42rem)] sm:mt-10 md:mt-12 md:max-w-[min(100%,48rem)] lg:max-w-[min(100%,56rem)]">
-            <p className="-rotate-1 font-condiment normal-case leading-snug text-neon opacity-95 mix-blend-exclusion sm:leading-normal text-[clamp(1.35rem,calc(3.8vw+0.65rem),2.25rem)] sm:text-[clamp(1.5rem,calc(4.2vw+0.5rem),2.75rem)] md:text-[clamp(1.75rem,calc(4.5vw+0.5rem),3.25rem)] lg:text-[clamp(2rem,calc(4.8vw+0.25rem),3.75rem)] xl:text-[clamp(2.25rem,5vw,4.25rem)]">
+            <p className="-rotate-1 font-condiment normal-case leading-snug text-neon opacity-95 mix-blend-exclusion sm:leading-normal text-[clamp(1.013rem,calc(2.85vw+0.488rem),1.688rem)] sm:text-[clamp(1.125rem,calc(3.15vw+0.375rem),2.063rem)] md:text-[clamp(1.313rem,calc(3.375vw+0.375rem),2.438rem)] lg:text-[clamp(1.5rem,calc(3.6vw+0.188rem),2.813rem)] xl:text-[clamp(1.688rem,3.75vw,3.188rem)]">
               Transforming Chaos into Systems
             </p>
           </div>

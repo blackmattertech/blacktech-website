@@ -48,32 +48,75 @@ const SOCIALS = [
     ),
   },
 ] as const;
+const WHATSAPP_PREFILL =
+  "https://wa.me/917483618278?text=Hi%2C%20I%20want%20to%20build%20a%20system%2Fwebsite%20for%20my%20business.%20Can%20we%20discuss%3F";
+const CALL_LINK = "tel:+917483618278";
 
 export default function SocialSpreadCard() {
   return (
-    <nav
-      className="pointer-events-auto fixed right-3 top-[5.75rem] z-40 hidden md:block xl:right-6"
-      aria-label="Social media"
-    >
-      <div className="social-spread-card">
-        <div className="social-spread-card__background" aria-hidden />
-        <div className="social-spread-card__logo">Socials</div>
+    <>
+      <div className="pointer-events-auto fixed bottom-4 right-3 z-40 flex flex-col items-end gap-3 xl:right-6">
+        <a
+          href={CALL_LINK}
+          className="bm-whatsapp-btn bm-call-btn"
+          aria-label="Call now"
+        >
+          <span className="bm-whatsapp-btn__sign" aria-hidden>
+            <svg
+              className="bm-whatsapp-btn__icon"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.02-.24c1.12.37 2.33.57 3.57.57a1 1 0 0 1 1 1V20a1 1 0 0 1-1 1C10.07 21 3 13.93 3 5a1 1 0 0 1 1-1h3.49a1 1 0 0 1 1 1c0 1.24.2 2.45.57 3.57a1 1 0 0 1-.24 1.02l-2.2 2.2z" />
+            </svg>
+          </span>
+          <span className="bm-whatsapp-btn__text">Call</span>
+        </a>
 
-        {SOCIALS.map(({ href, label, hitClass, children }) => (
-          <a
-            key={href}
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`social-spread-card__hit ${hitClass}`}
-            aria-label={label}
-          >
-            <span className="social-spread-card__icon">{children}</span>
-          </a>
-        ))}
-
-        <div className="social-spread-card__corner" aria-hidden />
+        <a
+          href={WHATSAPP_PREFILL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bm-whatsapp-btn"
+          aria-label="Chat on WhatsApp"
+        >
+          <span className="bm-whatsapp-btn__sign" aria-hidden>
+            <svg
+              className="bm-whatsapp-btn__icon"
+              viewBox="0 0 16 16"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z" />
+            </svg>
+          </span>
+          <span className="bm-whatsapp-btn__text">Whatsapp</span>
+        </a>
       </div>
-    </nav>
+
+      <nav
+        className="pointer-events-auto fixed right-3 top-6 z-40 hidden md:block xl:right-6"
+        aria-label="Social media"
+      >
+        <div className="social-spread-card">
+          <div className="social-spread-card__background" aria-hidden />
+          <div className="social-spread-card__logo">Socials</div>
+
+          {SOCIALS.map(({ href, label, hitClass, children }) => (
+            <a
+              key={href}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`social-spread-card__hit ${hitClass}`}
+              aria-label={label}
+            >
+              <span className="social-spread-card__icon">{children}</span>
+            </a>
+          ))}
+
+          <div className="social-spread-card__corner" aria-hidden />
+        </div>
+      </nav>
+    </>
   );
 }

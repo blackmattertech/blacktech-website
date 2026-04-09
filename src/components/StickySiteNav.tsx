@@ -1,4 +1,5 @@
-import { useId } from "react";
+import { type MouseEvent, useId } from "react";
+import { openProjectFormModal } from "../constants/projectFormModal";
 
 /** ASCII-only label for SVG textPath (no bidi / zero-width chars). */
 const CONTACT_ORBIT_ARC_ASCII =
@@ -14,11 +15,15 @@ const ORBIT_PATH_TEXT_LENGTH = Math.round(2 * Math.PI * ORBIT_PATH_RADIUS);
 export default function StickySiteNav() {
   const orbitPathId = useId().replace(/:/g, "");
   const ry = 50 - ORBIT_PATH_RADIUS;
+  const handleOpenProjectForm = (e: MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    openProjectFormModal();
+  };
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
-      <div className="pointer-events-auto mx-auto max-w-5xl px-4 pt-4 sm:px-6 sm:pt-5">
+      <div className="pointer-events-auto mx-auto max-w-5xl px-5 pt-6 sm:px-7 sm:pt-6">
         <nav
-          className="liquid-glass flex items-center justify-between gap-3 overflow-visible rounded-full px-4 py-2.5 sm:px-6 sm:py-3"
+          className="liquid-glass relative flex items-center justify-between gap-3 overflow-visible rounded-full px-4 py-2.5 sm:px-6 sm:py-3"
           aria-label="Primary"
         >
           <div className="flex min-w-0 flex-1 items-center">
@@ -35,39 +40,42 @@ export default function StickySiteNav() {
                 decoding="async"
               />
             </a>
-            <div className="ml-2 hidden flex-wrap items-center gap-x-3 gap-y-1 text-[12px] font-medium text-white/80 md:ml-5 md:flex lg:gap-x-4 lg:text-sm">
-              <a href="#features" className="transition-colors hover:text-white">
-                Services
-              </a>
-              <a
-                href="#tech-insights"
-                className="transition-colors hover:text-white"
-              >
-                Insights
-              </a>
-              <a
-                href="#selected-work"
-                className="transition-colors hover:text-white"
-              >
-                Work
-              </a>
-              <a href="#pricing" className="transition-colors hover:text-white">
-                Pricing
-              </a>
-              <a href="#about" className="transition-colors hover:text-white">
-                About
-              </a>
-            </div>
+          </div>
+          <div className="pointer-events-auto absolute left-1/2 hidden -translate-x-1/2 items-center gap-x-3 gap-y-1 text-[12px] font-medium text-white/80 md:flex lg:gap-x-4 lg:text-sm">
+            <a href="#hero" className="transition-colors hover:text-white">
+              Home
+            </a>
+            <a href="#about" className="transition-colors hover:text-white">
+              About
+            </a>
+            <a href="#features" className="transition-colors hover:text-white">
+              Services
+            </a>
+            <a href="#selected-work" className="transition-colors hover:text-white">
+              Case Studies
+            </a>
+            <a
+              href="#contact"
+              onClick={handleOpenProjectForm}
+              className="transition-colors hover:text-white"
+            >
+              Contact
+            </a>
+            <a href="/blog" className="transition-colors hover:text-white">
+              Blog
+            </a>
           </div>
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <a
               href="#contact"
+              onClick={handleOpenProjectForm}
               className="hidden text-sm font-medium text-white/90 transition-colors hover:text-white lg:inline"
             >
               Start a project
             </a>
             <a
               href="#contact"
+              onClick={handleOpenProjectForm}
               className="nav-contact-orbit"
               aria-label="Contact us"
             >

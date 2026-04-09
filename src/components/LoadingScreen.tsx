@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const WORDS = ["Ship", "Systems", "Scale"];
+const WORDS = ["Simplify", "Systemize", "Automate", "Track", "Scale"];
 
 export default function LoadingScreen({
   onComplete,
@@ -13,7 +13,7 @@ export default function LoadingScreen({
 
   useEffect(() => {
     const start = performance.now();
-    const duration = 2700;
+    const duration = 5000;
     let raf = 0;
     const step = (now: number) => {
       const t = Math.min(1, (now - start) / duration);

@@ -67,6 +67,54 @@
     background: linear-gradient(90deg, #6fff00 0%, #3dd400 100%);
   }
 
+  /* Uiverse-style WhatsApp CTA (Gaurang7717), scoped for hero social stack */
+  .bm-whatsapp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    background-color: #00d757;
+    text-decoration: none;
+  }
+
+  .bm-whatsapp-btn__sign {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bm-whatsapp-btn__icon {
+    width: 25px;
+  }
+
+  .bm-whatsapp-btn__icon path {
+    fill: #fff;
+  }
+
+  .bm-whatsapp-btn__text {
+    display: none;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .bm-whatsapp-btn:active {
+    transform: translate(2px, 2px);
+  }
+
+  .bm-call-btn {
+    background-color: #3b82f6;
+  }
+
   /* Uiverse-style circular CTA (Creatlydev); scaled for sticky header */
   .nav-contact-orbit {
     --nav-contact-orbit-size: 4rem;
