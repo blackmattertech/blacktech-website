@@ -6,8 +6,8 @@ const VIDEO_SRC =
 
 export default function FeaturedVideoSection() {
   return (
-    <section className="overflow-hidden bg-black px-6 pb-20 pt-6 md:pb-32 md:pt-10">
-      <div className="relative mx-auto max-w-6xl">
+    <section className="overflow-hidden bg-black py-8 md:py-10">
+      <div className="relative mx-auto max-w-6xl px-6 md:px-8">
         <ImmersiveReveal intensity="deep" className="relative block aspect-video overflow-hidden rounded-3xl">
           <video
             className="h-full w-full object-cover"

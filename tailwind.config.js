@@ -11,6 +11,15 @@ export default {
         body: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
         grotesk: ["Anton", "sans-serif"],
         condiment: ["Condiment", "cursive"],
+        yellowtail: ["Yellowtail", "cursive"],
+        orbitron: ["Orbitron", "ui-sans-serif", "system-ui", "sans-serif"],
+        "space-grotesk": [
+          "Space Grotesk",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+        ],
+        jetbrains: ["JetBrains Mono", "ui-monospace", "monospace"],
       },
       colors: {
         space: "#010828",
