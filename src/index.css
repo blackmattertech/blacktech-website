@@ -115,12 +115,52 @@
     background-color: #3b82f6;
   }
 
+  .service-brush-label {
+    position: relative;
+    z-index: 0;
+  }
+
+  .service-brush-label::after {
+    content: "";
+    position: absolute;
+    left: -0.08em;
+    right: -0.08em;
+    bottom: 0.04em;
+    height: 0.18em;
+    z-index: -1;
+    background:
+      radial-gradient(8px 3px at 8% 40%, rgba(111, 255, 0, 0.9), transparent 70%),
+      radial-gradient(8px 3px at 27% 65%, rgba(111, 255, 0, 0.78), transparent 72%),
+      radial-gradient(8px 3px at 55% 42%, rgba(111, 255, 0, 0.88), transparent 70%),
+      radial-gradient(8px 3px at 82% 62%, rgba(111, 255, 0, 0.76), transparent 72%),
+      linear-gradient(90deg, rgba(111, 255, 0, 0.85), rgba(111, 255, 0, 0.8));
+    border-radius: 999px;
+    opacity: 0.95;
+    transform-origin: left center;
+  }
+
+  .service-brush-label--1::after {
+    transform: rotate(-1.3deg);
+  }
+
+  .service-brush-label--2::after {
+    transform: rotate(0.9deg);
+  }
+
+  .service-brush-label--3::after {
+    transform: rotate(-0.8deg);
+  }
+
+  .service-brush-label--4::after {
+    transform: rotate(1.2deg);
+  }
+
   /* Uiverse-style circular CTA (Creatlydev); scaled for sticky header */
   .nav-contact-orbit {
     --nav-contact-orbit-size: 4rem;
     cursor: pointer;
     border: none;
-    background: #7808d0;
+    background: #000;
     color: #fff;
     width: var(--nav-contact-orbit-size);
     height: var(--nav-contact-orbit-size);
@@ -166,7 +206,7 @@
     height: calc(var(--nav-contact-orbit-size) * 0.4);
     overflow: hidden;
     background: #fff;
-    color: #7808d0;
+    color: #000;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -184,12 +224,21 @@
   }
 
   .nav-contact-orbit:hover {
-    background: #000;
+    background: #fff;
     transform: scale(1.05);
   }
 
+  .nav-contact-orbit:hover .nav-contact-orbit__svg-text {
+    fill: #000;
+  }
+
+  .nav-contact-orbit:hover .nav-contact-orbit__circle {
+    background: #000;
+    color: #fff;
+  }
+
   .nav-contact-orbit:hover .nav-contact-orbit__icon {
-    color: #000;
+    color: #fff;
   }
 
   .nav-contact-orbit:hover .nav-contact-orbit__icon:first-child {
@@ -229,12 +278,12 @@
   .social-spread-card__background {
     position: absolute;
     inset: 0;
-    background-color: #4158d0;
+    background-color: #6b7280;
     background-image: linear-gradient(
       43deg,
-      #4158d0 0%,
-      #c850c0 46%,
-      #ffcc70 100%
+      #6b7280 0%,
+      #525a65 46%,
+      #374151 100%
     );
   }
 

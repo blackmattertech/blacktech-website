@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import AboutSection from "./components/AboutSection";
+import PrinciplesSection from "./components/PrinciplesSection";
 import CompanyStatsSection from "./components/CompanyStatsSection";
 import FeaturedVideoSection from "./components/FeaturedVideoSection";
 import ContactSection from "./components/ContactSection";
@@ -10,7 +11,6 @@ import MarqueeStrip from "./components/MarqueeStrip";
 import OrbisLabsVideoSection from "./components/OrbisLabsVideoSection";
 import PhilosophySection from "./components/PhilosophySection";
 import ProjectInquiryModal from "./components/ProjectInquiryModal";
-import SelectedWorkBento from "./components/SelectedWorkBento";
 import ServicesSection from "./components/ServicesSection";
 import SpaceCTASection from "./components/SpaceCTASection";
 import SocialSpreadCard from "./components/SocialSpreadCard";
@@ -37,12 +37,12 @@ export default function Index() {
         <OrbisLabsVideoSection />
 
         <AboutSection />
-        <SelectedWorkBento />
+        <PrinciplesSection />
+        <ServicesSection />
         <FeaturedVideoSection />
         <PhilosophySection />
         <SpaceIntroSection />
         <CompanyStatsSection />
-        <ServicesSection />
         <SystemsCollectionSection />
         <TechInsightsSection />
         <SpaceCTASection />
