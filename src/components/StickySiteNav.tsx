@@ -1,4 +1,4 @@
-import { type MouseEvent, useId } from "react";
+import { type MouseEvent, useId, useLayoutEffect, useRef, useState } from "react";
 import { openProjectFormModal } from "../constants/projectFormModal";
 
 /** ASCII-only label for SVG textPath (no bidi / zero-width chars). */
@@ -12,18 +12,67 @@ const ORBIT_PATH_RADIUS = 41;
 /** Circumference for textLength so the full string fits along the path. */
 const ORBIT_PATH_TEXT_LENGTH = Math.round(2 * Math.PI * ORBIT_PATH_RADIUS);
 
+/** Viewport strip from top — overlap with a light section switches nav to dark theme. */
+const HEADER_LIGHT_OVERLAP_PX = 96;
+
+function isAnyLightSurfaceBehindHeader(): boolean {
+  const sections = document.querySelectorAll<HTMLElement>(
+    "[data-header-surface=\"light\"]"
+  );
+  for (const el of sections) {
+    const r = el.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < HEADER_LIGHT_OVERLAP_PX) return true;
+  }
+  return false;
+}
+
 export default function StickySiteNav() {
   const orbitPathId = useId().replace(/:/g, "");
   const ry = 50 - ORBIT_PATH_RADIUS;
+  const [onLightSurface, setOnLightSurface] = useState(false);
+  const rafRef = useRef<number>(0);
+
   const handleOpenProjectForm = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     openProjectFormModal();
   };
+
+  useLayoutEffect(() => {
+    const tick = () => {
+      setOnLightSurface(isAnyLightSurfaceBehindHeader());
+    };
+    tick();
+
+    const schedule = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(tick);
+    };
+
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  const link =
+    "transition-colors " +
+    (onLightSurface
+      ? "text-black/70 hover:text-black"
+      : "text-white/80 hover:text-white");
+
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
       <div className="pointer-events-auto mx-auto max-w-5xl px-5 pt-6 sm:px-7 sm:pt-6">
         <nav
-          className="liquid-glass relative flex items-center justify-between gap-3 overflow-visible rounded-full px-4 py-2.5 sm:px-6 sm:py-3"
+          className={
+            "site-nav relative flex items-center justify-between gap-3 overflow-visible rounded-full px-4 py-2.5 sm:px-6 sm:py-3 " +
+            (onLightSurface
+              ? "site-nav--on-light border border-black/[0.08] bg-white/80 shadow-sm backdrop-blur-md"
+              : "liquid-glass")
+          }
           aria-label="Primary"
         >
           <div className="flex min-w-0 flex-1 items-center">
@@ -34,34 +83,37 @@ export default function StickySiteNav() {
               <img
                 src="/logo.svg"
                 alt="BlackMatter Technologies"
-                className="h-7 w-auto max-w-[min(100%,11rem)] shrink-0 object-contain object-left sm:h-8 sm:max-w-[13rem] md:max-w-[15.5rem] lg:h-9 lg:max-w-[17.5rem]"
+                className={
+                  "h-7 w-auto max-w-[min(100%,11rem)] shrink-0 object-contain object-left transition-[filter] duration-300 sm:h-8 sm:max-w-[13rem] md:max-w-[15.5rem] lg:h-9 lg:max-w-[17.5rem] " +
+                  (onLightSurface ? "brightness-0" : "")
+                }
                 width={385}
                 height={102}
                 decoding="async"
               />
             </a>
           </div>
-          <div className="pointer-events-auto absolute left-1/2 hidden -translate-x-1/2 items-center gap-x-3 gap-y-1 text-[12px] font-medium text-white/80 md:flex lg:gap-x-4 lg:text-sm">
-            <a href="#hero" className="transition-colors hover:text-white">
+          <div className="pointer-events-auto absolute left-1/2 hidden -translate-x-1/2 items-center gap-x-3 gap-y-1 text-[12px] font-medium md:flex lg:gap-x-4 lg:text-sm">
+            <a href="#hero" className={link}>
               Home
             </a>
-            <a href="#about" className="transition-colors hover:text-white">
+            <a href="#about" className={link}>
               About
             </a>
-            <a href="#features" className="transition-colors hover:text-white">
+            <a href="#features" className={link}>
               Services
             </a>
-            <a href="#selected-work" className="transition-colors hover:text-white">
+            <a href="#selected-work" className={link}>
               Case Studies
             </a>
             <a
               href="#contact"
               onClick={handleOpenProjectForm}
-              className="transition-colors hover:text-white"
+              className={link}
             >
               Contact
             </a>
-            <a href="/blog" className="transition-colors hover:text-white">
+            <a href="/blog" className={link}>
               Blog
             </a>
           </div>
@@ -69,7 +121,12 @@ export default function StickySiteNav() {
             <a
               href="#contact"
               onClick={handleOpenProjectForm}
-              className="hidden text-sm font-medium text-white/90 transition-colors hover:text-white lg:inline"
+              className={
+                "hidden text-sm font-medium transition-colors lg:inline " +
+                (onLightSurface
+                  ? "text-black/80 hover:text-black"
+                  : "text-white/90 hover:text-white")
+              }
             >
               Start a project
             </a>

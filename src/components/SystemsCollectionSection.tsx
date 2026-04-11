@@ -1,6 +1,9 @@
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { ImmersiveReveal } from "./motion/ImmersiveReveal";
+import SplitText from "./SplitText";
+import { SPOTLIGHT_SECTION_HEADING_TYPO } from "./SpotlightSectionHeading";
 
 const GITHUB_ORG = "https://github.com/blackmattertech";
 
@@ -12,7 +15,8 @@ const CARDS = [
     label: "ERP & Operations",
     detail: "TypeScript · production",
     tags: ["ERP", "Ops", "TypeScript"],
-    href: `${GITHUB_ORG}/erp`,
+    href: "/case-studies/tag-unlimited-erp",
+    external: false,
   },
   {
     id: "02",
@@ -22,6 +26,7 @@ const CARDS = [
     detail: "APIs · document flows",
     tags: ["APIs", "Integration", "Docs"],
     href: `${GITHUB_ORG}/xcel-ppf`,
+    external: true,
   },
   {
     id: "03",
@@ -31,6 +36,7 @@ const CARDS = [
     detail: "JavaScript · TypeScript",
     tags: ["CRM", "Sales", "Automation"],
     href: `${GITHUB_ORG}/xcelcrm`,
+    external: true,
   },
 ] as const;
 
@@ -43,35 +49,14 @@ export default function SystemsCollectionSection() {
       <div className="mx-auto max-w-6xl px-6 md:px-8">
         {/* Header */}
         <ImmersiveReveal className="mb-12 md:mb-16">
-          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <div className="flex items-center gap-3">
-                <span className="font-mono text-[10px] text-white/30">03</span>
-                <div className="h-px w-8 bg-white/15" />
-                <span className="text-xs uppercase tracking-[0.3em] text-white/40">
-                  Systems
-                </span>
-              </div>
-              <h2 className="mt-6 font-display text-4xl leading-tight text-white md:text-5xl lg:text-6xl">
-                We ship &amp; <span className="italic">maintain</span>
-              </h2>
-              <p className="mt-3 max-w-md text-sm leading-relaxed text-white/45">
-                Production-grade systems shipped across industries — ERP, CRM,
-                integrations, and internal platforms your team can extend.
-              </p>
-            </div>
-
-            <motion.a
-              href={GITHUB_ORG}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex shrink-0 items-center gap-2 self-start rounded-full border border-white/15 px-5 py-2.5 text-sm text-white/60 transition-all duration-200 hover:border-white/35 hover:text-white sm:self-auto"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              View on GitHub
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </motion.a>
+          <div className="max-w-full">
+            <SplitText
+              text="Case studies"
+              tag="h2"
+              className={`m-0 text-white ${SPOTLIGHT_SECTION_HEADING_TYPO}`}
+              textAlign="left"
+              splitType="chars"
+            />
           </div>
         </ImmersiveReveal>
 
@@ -112,15 +97,25 @@ export default function SystemsCollectionSection() {
                     </h3>
                     <p className="mt-0.5 text-xs text-white/40">{card.detail}</p>
                   </div>
-                  <a
-                    href={card.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neon text-black shadow-[0_0_16px_rgba(111,255,0,0.25)] transition-transform duration-200 hover:scale-110"
-                    aria-label={`Open ${card.label} on GitHub`}
-                  >
-                    <ArrowUpRight className="h-4 w-4" />
-                  </a>
+                  {card.external ? (
+                    <a
+                      href={card.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neon text-black shadow-[0_0_16px_rgba(111,255,0,0.25)] transition-transform duration-200 hover:scale-110"
+                      aria-label={`Open ${card.label} on GitHub`}
+                    >
+                      <ArrowUpRight className="h-4 w-4" />
+                    </a>
+                  ) : (
+                    <Link
+                      to={card.href}
+                      className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-neon text-black shadow-[0_0_16px_rgba(111,255,0,0.25)] transition-transform duration-200 hover:scale-110"
+                      aria-label={`View ${card.label} case study`}
+                    >
+                      <ArrowUpRight className="h-4 w-4" />
+                    </Link>
+                  )}
                 </div>
 
                 {/* Tags */}

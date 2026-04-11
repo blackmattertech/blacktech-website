@@ -1,21 +1,9 @@
+import { openProjectFormModal } from "../constants/projectFormModal";
+import { SpotlightSectionHeading } from "./SpotlightSectionHeading";
 import { ImmersiveReveal } from "./motion/ImmersiveReveal";
 import { ArrowUpRight } from "lucide-react";
-import {
-  AnimatePresence,
-  animate,
-  motion,
-  useMotionTemplate,
-  useMotionValue,
-  useReducedMotion,
-  useTransform,
-} from "framer-motion";
-import {
-  type MouseEvent,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { type MouseEvent, useEffect, useRef, useState } from "react";
 
 const WEB_DESIGN_POINTS = [
   {
@@ -172,88 +160,26 @@ const AUTOMATION_LABELS = [
 const DRAW_CIRCLE_PATH =
   "M142.293 1C106.854 16.8908 6.08202 7.17705 1.23654 43.3756C-2.10604 68.3466 29.5633 73.2652 122.688 71.7518C215.814 70.2384 316.298 70.689 275.761 38.0785C230.14 1.37835 97.0503 24.4575 52.9384 1";
 
-const WHAT_WE_BUILD_TYPO =
-  "text-balance text-4xl font-semibold uppercase tracking-[0.12em] sm:text-5xl sm:tracking-[0.16em] md:text-6xl md:tracking-[0.18em]";
+/** Hover-only background for Website Development title column (raw video, no overlay). */
+const WEBSITE_DEV_TEXT_HOVER_VIDEO = "/website.mp4";
 
-function WhatWeBuildSpotlightHeading() {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const textRef = useRef<HTMLParagraphElement>(null);
-  const [diameterPx, setDiameterPx] = useState(0);
-  const [maxX, setMaxX] = useState(0);
-  const reduceMotion = useReducedMotion();
-  const x = useMotionValue(0);
-  const rClip = useMotionValue(0);
-  const cx = useTransform([x, rClip], ([xv, rv]) => (xv as number) + (rv as number));
-  const clipPath = useMotionTemplate`circle(${rClip}px at ${cx}px 50%)`;
+/** Hover-only background for Ecommerce Development title column (same behavior as website dev). */
+const ECOMMERCE_TEXT_HOVER_VIDEO = "/ecommerce.mp4";
 
-  useLayoutEffect(() => {
-    const track = trackRef.current;
-    const text = textRef.current;
-    if (!track || !text) return;
-    const measure = () => {
-      const h = text.getBoundingClientRect().height;
-      const d = Math.max(24, h * 2);
-      rClip.set(d / 2);
-      setDiameterPx(d);
-      setMaxX(Math.max(0, track.offsetWidth - d));
-    };
-    measure();
-    const ro = new ResizeObserver(measure);
-    ro.observe(track);
-    return () => ro.disconnect();
-  }, [rClip]);
+/** Hover-only background for Web Applications title column. */
+const WEB_APPLICATIONS_TEXT_HOVER_VIDEO = "/crm.mp4";
 
-  useEffect(() => {
-    if (reduceMotion || maxX <= 0) {
-      x.set(0);
-      return;
-    }
-    const controls = animate(x, [0, maxX], {
-      duration: 3.6,
-      repeat: Number.POSITIVE_INFINITY,
-      repeatType: "reverse",
-      ease: "easeInOut",
-    });
-    return () => controls.stop();
-  }, [maxX, reduceMotion, x]);
+/** Hover-only background for Mobile Applications title column. */
+const MOBILE_APPLICATIONS_TEXT_HOVER_VIDEO = "/mobileapps.mp4";
 
-  return (
-    <div ref={trackRef} className="group relative inline-block max-w-full">
-      <p
-        ref={textRef}
-        className={`relative z-0 m-0 text-white transition-colors duration-300 group-hover:text-neon ${WHAT_WE_BUILD_TYPO}`}
-      >
-        What we build
-      </p>
+/** Hover-only background for SaaS Platforms title column. */
+const SAAS_PLATFORMS_TEXT_HOVER_VIDEO = "/saas.mp4";
 
-      {!reduceMotion && diameterPx > 0 ? (
-        <>
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 z-10 overflow-visible opacity-100 transition-opacity duration-300 group-hover:opacity-0"
-            style={{ clipPath }}
-          >
-            <p
-              className={`m-0 text-neon ${WHAT_WE_BUILD_TYPO} pointer-events-none`}
-            >
-              What we build
-            </p>
-          </motion.div>
-          <motion.div
-            aria-hidden
-            className="pointer-events-none absolute left-0 top-1/2 z-[11] rounded-full border border-white/25 bg-black/10 shadow-[0_0_48px_rgba(0,0,0,0.45)] transition-opacity duration-300 group-hover:opacity-0"
-            style={{
-              width: diameterPx,
-              height: diameterPx,
-              x,
-              y: "-50%",
-            }}
-          />
-        </>
-      ) : null}
-    </div>
-  );
-}
+/** Hover-only background for UI/UX Design title column. */
+const UI_UX_TEXT_HOVER_VIDEO = "/ui-ux.mp4";
+
+/** Hover-only background for Automation & Systems title column. */
+const AUTOMATION_SYSTEMS_TEXT_HOVER_VIDEO = "/automation.mp4";
 
 function SpotlightLabel({
   label,
@@ -300,6 +226,8 @@ function ServiceFeaturePanel({
   flipLayout,
   labels,
   points,
+  textBlockHoverVideoSrc,
+  hoverVideoSegmentLoopSec,
   title,
 }: {
   activeCycle: number;
@@ -308,30 +236,96 @@ function ServiceFeaturePanel({
   labels: readonly string[];
   points: readonly { title: string; body: string }[];
   title: string;
+  textBlockHoverVideoSrc?: string;
+  /** If set, loop only `[0, min(this, duration)]` instead of the full file. */
+  hoverVideoSegmentLoopSec?: number;
 }) {
   const n = labels.length;
+  const hoverVideoRef = useRef<HTMLVideoElement | null>(null);
+  const textShadowOnVideo =
+    "drop-shadow-[0_2px_18px_rgba(0,0,0,0.92)] drop-shadow-[0_1px_4px_rgba(0,0,0,0.75)]";
+
+  const handleHoverVideoTimeUpdate = () => {
+    if (hoverVideoSegmentLoopSec == null) return;
+    const v = hoverVideoRef.current;
+    if (!v) return;
+    const duration = v.duration;
+    const end =
+      Number.isFinite(duration) && duration > 0
+        ? Math.min(hoverVideoSegmentLoopSec, duration)
+        : hoverVideoSegmentLoopSec;
+    if (v.currentTime >= end - 0.04) {
+      v.currentTime = 0;
+    }
+  };
+
+  const handleHoverVideoEnded = () => {
+    if (hoverVideoSegmentLoopSec == null) return;
+    const v = hoverVideoRef.current;
+    if (!v) return;
+    const duration = v.duration;
+    if (
+      Number.isFinite(duration) &&
+      duration > 0 &&
+      duration < hoverVideoSegmentLoopSec
+    ) {
+      v.currentTime = 0;
+      void v.play();
+    }
+  };
+
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/[0.12] bg-black/60">
+    <div className="min-w-0 overflow-hidden rounded-2xl border border-white/[0.12] bg-black/60">
       <div
-        className={`grid grid-cols-1 divide-y divide-white/[0.1] lg:divide-y-0 ${
-          flipLayout ? "lg:grid-cols-[1.95fr,1.05fr]" : "lg:grid-cols-[1.05fr,1.95fr]"
+        className={`grid min-w-0 grid-cols-1 divide-y divide-white/[0.1] lg:divide-y-0 ${
+          flipLayout ? "lg:grid-cols-[1.72fr,1.28fr]" : "lg:grid-cols-[1.28fr,1.72fr]"
         }`}
       >
         <div
-          className={`p-8 md:p-10 ${
+          className={`group relative isolate min-w-0 overflow-visible p-10 md:p-12 lg:p-14 ${
             flipLayout
               ? "lg:order-2 lg:border-l lg:border-white/[0.1] lg:text-right"
               : "lg:order-1 lg:border-r lg:border-white/[0.1]"
           }`}
+          onMouseEnter={() => {
+            if (!textBlockHoverVideoSrc) return;
+            void hoverVideoRef.current?.play();
+          }}
+          onMouseLeave={() => {
+            if (!hoverVideoRef.current) return;
+            hoverVideoRef.current.pause();
+            hoverVideoRef.current.currentTime = 0;
+          }}
         >
-          <h2 className="font-grotesk text-5xl uppercase leading-[0.9] tracking-tight text-white sm:text-6xl md:text-7xl">
-            {title}
-          </h2>
-          <div
-            className={`mt-7 flex flex-wrap items-end gap-x-6 gap-y-3 md:mt-8 md:gap-x-8 ${
-              flipLayout ? "lg:justify-end" : ""
-            }`}
-          >
+          {textBlockHoverVideoSrc ? (
+            <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+              <video
+                ref={hoverVideoRef}
+                className="h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+                src={textBlockHoverVideoSrc}
+                muted
+                loop={hoverVideoSegmentLoopSec == null}
+                playsInline
+                preload="metadata"
+                aria-hidden
+                onTimeUpdate={handleHoverVideoTimeUpdate}
+                onEnded={handleHoverVideoEnded}
+              />
+            </div>
+          ) : null}
+          <div className="relative z-10 min-w-0">
+            <h2
+              className={`font-grotesk w-full min-w-0 max-w-full text-balance break-words uppercase leading-[0.92] tracking-tight text-white text-[clamp(1.75rem,4.2vw+0.35rem,3.35rem)] sm:text-[clamp(2rem,4.8vw+0.25rem,3.75rem)] md:text-[clamp(2.15rem,5vw+0.2rem,4.25rem)] lg:text-[clamp(1.55rem,0.85rem+3.1vw,3.2rem)] xl:text-[clamp(2rem,1.1rem+3.4vw,4rem)] 2xl:text-[clamp(2.25rem,1.2rem+3.5vw,4.5rem)] [overflow-wrap:anywhere] ${
+                textBlockHoverVideoSrc ? textShadowOnVideo : ""
+              }`}
+            >
+              {title}
+            </h2>
+            <div
+              className={`mt-7 flex flex-wrap items-end gap-x-6 gap-y-3 md:mt-8 md:gap-x-8 ${
+                flipLayout ? "lg:justify-end" : ""
+              } ${textBlockHoverVideoSrc ? textShadowOnVideo : ""}`}
+            >
             {labels.map((label, idx) => (
               <span
                 key={label}
@@ -365,10 +359,11 @@ function ServiceFeaturePanel({
                 </AnimatePresence>
               </span>
             ))}
+            </div>
           </div>
         </div>
         <div
-          className={`grid grid-cols-1 divide-y divide-white/[0.1] sm:grid-cols-2 sm:divide-x sm:divide-y-0 ${
+          className={`grid min-w-0 grid-cols-1 divide-y divide-white/[0.1] sm:grid-cols-2 sm:divide-x sm:divide-y-0 ${
             flipLayout
               ? "lg:order-1 lg:border-r lg:border-white/[0.1]"
               : "lg:order-2"
@@ -377,7 +372,7 @@ function ServiceFeaturePanel({
           {points.map((item, idx) => (
             <article
               key={item.title}
-              className={`p-6 md:p-8 ${idx >= 2 ? "sm:border-t sm:border-white/[0.1]" : ""}`}
+              className={`p-8 md:p-10 lg:p-12 ${idx >= 2 ? "sm:border-t sm:border-white/[0.1]" : ""}`}
             >
               <h3 className="text-3xl font-medium leading-tight tracking-tight text-white">
                 <SpotlightLabel
@@ -411,10 +406,10 @@ export default function ServicesSection() {
       id="features"
       className="border-t border-white/[0.07] bg-black py-20 text-white md:py-28"
     >
-      <div className="mx-auto max-w-6xl px-6 md:px-8">
+      <div className="mx-auto max-w-7xl px-6 md:px-8 xl:max-w-[90rem] xl:px-10">
         <ImmersiveReveal className="mb-10 md:mb-12">
           <div className="mb-8 sm:mb-10">
-            <WhatWeBuildSpotlightHeading />
+            <SpotlightSectionHeading>What we build</SpotlightSectionHeading>
           </div>
           <ServiceFeaturePanel
             activeCycle={activeCycle}
@@ -423,6 +418,7 @@ export default function ServicesSection() {
             title="Website Development"
             labels={PLATFORM_LABELS}
             points={WEB_DESIGN_POINTS}
+            textBlockHoverVideoSrc={WEBSITE_DEV_TEXT_HOVER_VIDEO}
           />
         </ImmersiveReveal>
         <ImmersiveReveal className="mb-10 md:mb-12">
@@ -433,6 +429,7 @@ export default function ServicesSection() {
             title="Ecommerce Development"
             labels={ECOMMERCE_LABELS}
             points={ECOMMERCE_POINTS}
+            textBlockHoverVideoSrc={ECOMMERCE_TEXT_HOVER_VIDEO}
           />
         </ImmersiveReveal>
         <ImmersiveReveal className="mb-10 md:mb-12">
@@ -443,6 +440,7 @@ export default function ServicesSection() {
             title="Web Applications"
             labels={WEB_APPLICATION_LABELS}
             points={WEB_APPLICATION_POINTS}
+            textBlockHoverVideoSrc={WEB_APPLICATIONS_TEXT_HOVER_VIDEO}
           />
         </ImmersiveReveal>
         <ImmersiveReveal className="mb-10 md:mb-12">
@@ -453,6 +451,7 @@ export default function ServicesSection() {
             title="Mobile Applications"
             labels={MOBILE_LABELS}
             points={MOBILE_POINTS}
+            textBlockHoverVideoSrc={MOBILE_APPLICATIONS_TEXT_HOVER_VIDEO}
           />
         </ImmersiveReveal>
         <ImmersiveReveal className="mb-10 md:mb-12">
@@ -463,6 +462,7 @@ export default function ServicesSection() {
             title="SaaS Platforms"
             labels={SAAS_LABELS}
             points={SAAS_POINTS}
+            textBlockHoverVideoSrc={SAAS_PLATFORMS_TEXT_HOVER_VIDEO}
           />
         </ImmersiveReveal>
         <ImmersiveReveal className="mb-10 md:mb-12">
@@ -473,6 +473,8 @@ export default function ServicesSection() {
             title="UI/UX Design"
             labels={UIUX_LABELS}
             points={UIUX_POINTS}
+            textBlockHoverVideoSrc={UI_UX_TEXT_HOVER_VIDEO}
+            hoverVideoSegmentLoopSec={20}
           />
         </ImmersiveReveal>
         <ImmersiveReveal className="mb-10 md:mb-12">
@@ -483,6 +485,7 @@ export default function ServicesSection() {
             title="Automation & Systems"
             labels={AUTOMATION_LABELS}
             points={AUTOMATION_POINTS}
+            textBlockHoverVideoSrc={AUTOMATION_SYSTEMS_TEXT_HOVER_VIDEO}
           />
         </ImmersiveReveal>
 
@@ -505,10 +508,14 @@ export default function ServicesSection() {
               <div className="shrink-0">
                 <a
                   href="#contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-medium text-black transition-opacity hover:opacity-90"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    openProjectFormModal();
+                  }}
+                  className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-medium text-black shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(255,255,255,0.18),0_0_0_1px_rgba(111,255,0,0.35)] active:translate-y-0 active:scale-[0.98] motion-reduce:transition-colors motion-reduce:hover:translate-y-0 motion-reduce:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.08)] motion-reduce:active:scale-100"
                 >
                   Request a proposal
-                  <ArrowUpRight className="h-4 w-4" />
+                  <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0" />
                 </a>
               </div>
             </div>

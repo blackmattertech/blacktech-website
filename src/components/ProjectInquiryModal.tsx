@@ -311,7 +311,7 @@ export default function ProjectInquiryModal() {
                 <button
                   type="submit"
                   disabled={!canSubmit}
-                  className="rounded-md bg-[#d6124a] px-6 py-2 text-base font-semibold text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+                  className="rounded-md bg-black px-6 py-2 text-base font-semibold text-neon transition-opacity hover:opacity-90 disabled:opacity-60"
                 >
                   {status === "loading" ? "Sending..." : "Send request"}
                 </button>
