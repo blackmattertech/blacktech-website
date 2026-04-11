@@ -36,6 +36,7 @@ export default function PrinciplesSection() {
   return (
     <section
       id="principles"
+      data-header-surface="light"
       className="border-t border-[#E8E8E8] bg-[#F9F9F9] py-20 text-[#111111] md:py-28"
     >
       <div className="relative mx-auto max-w-6xl px-6 md:px-8">

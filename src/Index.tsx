@@ -10,7 +10,6 @@ import LoadingScreen from "./components/LoadingScreen";
 import MarqueeStrip from "./components/MarqueeStrip";
 import OrbisLabsVideoSection from "./components/OrbisLabsVideoSection";
 import PhilosophySection from "./components/PhilosophySection";
-import ProjectInquiryModal from "./components/ProjectInquiryModal";
 import ServicesSection from "./components/ServicesSection";
 import SpaceCTASection from "./components/SpaceCTASection";
 import SocialSpreadCard from "./components/SocialSpreadCard";
@@ -31,7 +30,6 @@ export default function Index() {
       {isLoading && (
         <LoadingScreen onComplete={() => setIsLoading(false)} />
       )}
-      <ProjectInquiryModal />
       <div className="min-h-screen bg-black text-white">
         <SocialSpreadCard />
         <OrbisLabsVideoSection />
@@ -39,11 +37,11 @@ export default function Index() {
         <AboutSection />
         <PrinciplesSection />
         <ServicesSection />
+        <SystemsCollectionSection />
         <FeaturedVideoSection />
         <PhilosophySection />
         <SpaceIntroSection />
         <CompanyStatsSection />
-        <SystemsCollectionSection />
         <TechInsightsSection />
         <SpaceCTASection />
         <MarqueeStrip />
