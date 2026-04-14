@@ -12,8 +12,8 @@ const CARDS = [
     id: "01",
     video:
       "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4",
-    label: "ERP & Operations",
-    detail: "TypeScript · production",
+    label: "Custom ERP",
+    detail: "TAG Unlimited Clothing",
     tags: ["ERP", "Ops", "TypeScript"],
     href: "/case-studies/tag-unlimited-erp",
     external: false,
@@ -88,11 +88,11 @@ export default function SystemsCollectionSection() {
               <div className="flex flex-1 flex-col p-5">
                 {/* Index + label row */}
                 <div className="mb-3 flex items-start justify-between gap-3">
-                  <div>
+                  <div className="min-w-0 flex-1">
                     <span className="font-mono text-[10px] text-white/30">
                       {card.id}
                     </span>
-                    <h3 className="mt-1.5 text-base font-medium tracking-tight text-white">
+                    <h3 className="mt-1.5 text-balance text-base font-medium leading-snug tracking-tight text-white">
                       {card.label}
                     </h3>
                     <p className="mt-0.5 text-xs text-white/40">{card.detail}</p>

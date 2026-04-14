@@ -210,11 +210,11 @@ function ManufacturingInterfaceSection() {
   const textPanelDark = slide.textPanel === "dark";
 
   return (
-    <section className="bg-black text-white">
+    <section className="bg-white text-black">
       <div className="mx-auto max-w-7xl px-6 pb-10 pt-24 lg:px-12 lg:pb-14 lg:pt-28">
-        <SectionLabel dark>The interface</SectionLabel>
+        <SectionLabel>The interface</SectionLabel>
         <h2
-          className="mt-4 font-bold leading-[1.1] tracking-[-0.02em]"
+          className="mt-4 font-bold leading-[1.1] tracking-[-0.02em] text-black"
           style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
         >
           Designed for
@@ -225,10 +225,10 @@ function ManufacturingInterfaceSection() {
 
       <div
         ref={containerRef}
-        className="relative"
+        className="relative bg-white"
         style={{ height: `${(n + 2) * 100}vh` }}
       >
-        <div className="sticky top-0 flex min-h-screen flex-col justify-center py-12 lg:py-16">
+        <div className="sticky top-0 flex min-h-screen flex-col justify-center bg-white py-12 lg:py-16">
           <div className="mx-auto w-full max-w-7xl px-6 lg:px-12">
             <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:items-stretch lg:gap-6">
               {/* Text block — same footprint as image (landscape); no shared outer frame */}
@@ -295,7 +295,7 @@ function ManufacturingInterfaceSection() {
               </div>
             </div>
 
-            <p className="mt-12 text-center text-[11px] uppercase tracking-[0.14em] text-white/30">
+            <p className="mt-12 text-center text-[11px] uppercase tracking-[0.14em] text-black/35">
               Scroll to explore
             </p>
           </div>
