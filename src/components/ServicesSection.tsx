@@ -1,7 +1,6 @@
 import { openProjectFormModal } from "../constants/projectFormModal";
 import { SpotlightSectionHeading } from "./SpotlightSectionHeading";
 import { ImmersiveReveal } from "./motion/ImmersiveReveal";
-import { ArrowUpRight } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { type MouseEvent, useEffect, useRef, useState } from "react";
 
@@ -512,10 +511,26 @@ export default function ServicesSection() {
                     e.preventDefault();
                     openProjectFormModal();
                   }}
-                  className="group inline-flex cursor-pointer items-center gap-2 rounded-full bg-white px-8 py-3.5 text-sm font-medium text-black shadow-[0_0_0_1px_rgba(255,255,255,0.08)] transition-[transform,box-shadow] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] hover:-translate-y-0.5 hover:shadow-[0_12px_40px_rgba(255,255,255,0.18),0_0_0_1px_rgba(111,255,0,0.35)] active:translate-y-0 active:scale-[0.98] motion-reduce:transition-colors motion-reduce:hover:translate-y-0 motion-reduce:hover:shadow-[0_0_0_1px_rgba(255,255,255,0.08)] motion-reduce:active:scale-100"
+                  className="proposal-cta"
                 >
-                  Request a proposal
-                  <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:group-hover:translate-x-0 motion-reduce:group-hover:translate-y-0" />
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="proposal-cta__arr proposal-cta__arr--left"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden
+                  >
+                    <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+                  </svg>
+                  <span className="proposal-cta__text">Request a proposal</span>
+                  <span className="proposal-cta__circle" aria-hidden />
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="proposal-cta__arr proposal-cta__arr--right"
+                    xmlns="http://www.w3.org/2000/svg"
+                    aria-hidden
+                  >
+                    <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
+                  </svg>
                 </a>
               </div>
             </div>
