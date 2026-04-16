@@ -1,4 +1,5 @@
 import { type MouseEvent, useId, useLayoutEffect, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { openProjectFormModal } from "../constants/projectFormModal";
 
 /** ASCII-only label for SVG textPath (no bidi / zero-width chars). */
@@ -14,6 +15,17 @@ const ORBIT_PATH_TEXT_LENGTH = Math.round(2 * Math.PI * ORBIT_PATH_RADIUS);
 
 /** Viewport strip from top — overlap with a light section switches nav to dark theme. */
 const HEADER_LIGHT_OVERLAP_PX = 96;
+const HOME_SCROLL_SECTIONS = [
+  { id: "hero", href: "/#hero" },
+  { id: "about", href: "/#about" },
+  { id: "features", href: "/#features" },
+  { id: "systems-collection", href: "/#systems-collection" },
+] as const;
+type NavItem = {
+  label: string;
+  href: string;
+  isContact?: boolean;
+};
 
 function isAnyLightSurfaceBehindHeader(): boolean {
   const sections = document.querySelectorAll<HTMLElement>(
@@ -27,10 +39,35 @@ function isAnyLightSurfaceBehindHeader(): boolean {
 }
 
 export default function StickySiteNav() {
+  const location = useLocation();
   const orbitPathId = useId().replace(/:/g, "");
   const ry = 50 - ORBIT_PATH_RADIUS;
   const [onLightSurface, setOnLightSurface] = useState(false);
+  const [activeHomeSection, setActiveHomeSection] = useState("/#hero");
   const rafRef = useRef<number>(0);
+  const hash = location.hash || "#hero";
+  const isBlogRoute = location.pathname.startsWith("/blog");
+  const isHomeRoute = location.pathname === "/";
+  const homeHashHref = `/${hash}`;
+
+  const activeHref = isBlogRoute
+    ? "/blog"
+    : isHomeRoute
+      ? activeHomeSection
+      : ["/#hero", "/#about", "/#features", "/#systems-collection"].includes(
+            homeHashHref,
+          )
+        ? homeHashHref
+      : "/#hero";
+
+  const navItems: NavItem[] = [
+    { label: "Home", href: "/#hero" },
+    { label: "About", href: "/#about" },
+    { label: "Services", href: "/#features" },
+    { label: "Case Studies", href: "/#systems-collection" },
+    { label: "Contact", href: "/#contact", isContact: true },
+    { label: "Blog", href: "/blog" },
+  ] as const;
 
   const handleOpenProjectForm = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -57,11 +94,32 @@ export default function StickySiteNav() {
     };
   }, []);
 
-  const link =
-    "transition-colors " +
-    (onLightSurface
-      ? "text-black/70 hover:text-black"
-      : "text-white/80 hover:text-white");
+  useLayoutEffect(() => {
+    if (!isHomeRoute) return;
+
+    const detectActiveSection = () => {
+      const triggerLine = HEADER_LIGHT_OVERLAP_PX + 24;
+      let current = "/#hero";
+
+      for (const section of HOME_SCROLL_SECTIONS) {
+        const el = document.getElementById(section.id);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top <= triggerLine) {
+          current = section.href;
+        }
+      }
+
+      setActiveHomeSection(current);
+    };
+
+    detectActiveSection();
+    window.addEventListener("scroll", detectActiveSection, { passive: true });
+    window.addEventListener("resize", detectActiveSection, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", detectActiveSection);
+      window.removeEventListener("resize", detectActiveSection);
+    };
+  }, [isHomeRoute]);
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
@@ -77,7 +135,7 @@ export default function StickySiteNav() {
         >
           <div className="flex min-w-0 flex-1 items-center">
             <a
-              href="#hero"
+              href="/#hero"
               className="flex min-w-0 max-w-full items-center transition-opacity hover:opacity-90"
             >
               <img
@@ -93,29 +151,26 @@ export default function StickySiteNav() {
               />
             </a>
           </div>
-          <div className="pointer-events-auto absolute left-1/2 hidden -translate-x-1/2 items-center gap-x-3 gap-y-1 text-[12px] font-medium md:flex lg:gap-x-4 lg:text-sm">
-            <a href="#hero" className={link}>
-              Home
-            </a>
-            <a href="#about" className={link}>
-              About
-            </a>
-            <a href="#features" className={link}>
-              Services
-            </a>
-            <a href="#selected-work" className={link}>
-              Case Studies
-            </a>
-            <a
-              href="#contact"
-              onClick={handleOpenProjectForm}
-              className={link}
-            >
-              Contact
-            </a>
-            <a href="/blog" className={link}>
-              Blog
-            </a>
+          <div className="pointer-events-auto absolute left-1/2 hidden -translate-x-1/2 items-center md:flex">
+            <ul className="site-nav-pills">
+              {navItems.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.href}
+                    onClick={item.isContact ? handleOpenProjectForm : undefined}
+                    className={
+                      "site-nav-pill " +
+                      (activeHref === item.href ? "site-nav-pill--active " : "") +
+                      (onLightSurface
+                        ? "site-nav-pill--on-light"
+                        : "site-nav-pill--on-dark")
+                    }
+                  >
+                    <span>{item.label}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             <a
