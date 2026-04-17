@@ -2,20 +2,17 @@ import { useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import AboutSection from "./components/AboutSection";
 import PrinciplesSection from "./components/PrinciplesSection";
-import CompanyStatsSection from "./components/CompanyStatsSection";
-import FeaturedVideoSection from "./components/FeaturedVideoSection";
 import ContactSection from "./components/ContactSection";
 import SplineFooterSection from "./components/SplineFooterSection";
 import LoadingScreen from "./components/LoadingScreen";
 import MarqueeStrip from "./components/MarqueeStrip";
 import OrbisLabsVideoSection from "./components/OrbisLabsVideoSection";
 import PhilosophySection from "./components/PhilosophySection";
+import PremiumCapabilitiesMarquee from "./components/PremiumCapabilitiesMarquee";
 import ServicesSection from "./components/ServicesSection";
 import SpaceCTASection from "./components/SpaceCTASection";
 import SocialSpreadCard from "./components/SocialSpreadCard";
-import SpaceIntroSection from "./components/SpaceIntroSection";
 import SystemsCollectionSection from "./components/SystemsCollectionSection";
-import TechInsightsSection from "./components/TechInsightsSection";
 
 export default function Index() {
   const reduce = useReducedMotion();
@@ -38,11 +35,8 @@ export default function Index() {
         <PrinciplesSection />
         <ServicesSection />
         <SystemsCollectionSection />
-        <FeaturedVideoSection />
+        <PremiumCapabilitiesMarquee />
         <PhilosophySection />
-        <SpaceIntroSection />
-        <CompanyStatsSection />
-        <TechInsightsSection />
         <SpaceCTASection />
         <MarqueeStrip />
         <ContactSection />

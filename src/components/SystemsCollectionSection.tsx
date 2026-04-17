@@ -11,12 +11,12 @@ const CARDS = [
   {
     id: "01",
     video:
-      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4",
-    label: "Custom ERP",
-    detail: "TAG Unlimited Clothing",
-    tags: ["ERP", "Ops", "TypeScript"],
-    href: "/case-studies/tag-unlimited-erp",
-    external: false,
+      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_055427_ac7035b5-9f3b-4289-86fc-941b2432317d.mp4",
+    label: "CRM & Customer Ops",
+    detail: "JavaScript · TypeScript",
+    tags: ["CRM", "Sales", "Automation"],
+    href: `${GITHUB_ORG}/xcelcrm`,
+    external: true,
   },
   {
     id: "02",
@@ -31,11 +31,41 @@ const CARDS = [
   {
     id: "03",
     video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4",
+    label: "Custom ERP",
+    detail: "TAG Unlimited Clothing",
+    tags: ["ERP", "Ops", "TypeScript"],
+    href: "/case-studies/tag-unlimited-erp",
+    external: false,
+  },
+  {
+    id: "04",
+    video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_053923_22c0a6a5-313c-474c-85ff-3b50d25e944a.mp4",
+    label: "Inventory & Fulfillment",
+    detail: "Warehouse · dispatch flows",
+    tags: ["Inventory", "Operations", "Tracking"],
+    href: `${GITHUB_ORG}/xcel-ppf`,
+    external: true,
+  },
+  {
+    id: "05",
+    video:
+      "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_054411_511c1b7a-fb2f-42ef-bf6c-32c0b1a06e79.mp4",
+    label: "Order Orchestration",
+    detail: "B2B workflows · approvals",
+    tags: ["Orders", "Workflow", "Automation"],
+    href: `${GITHUB_ORG}/erp`,
+    external: true,
+  },
+  {
+    id: "06",
+    video:
       "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_055427_ac7035b5-9f3b-4289-86fc-941b2432317d.mp4",
-    label: "CRM & Customer Ops",
-    detail: "JavaScript · TypeScript",
-    tags: ["CRM", "Sales", "Automation"],
-    href: `${GITHUB_ORG}/xcelcrm`,
+    label: "Analytics Dashboards",
+    detail: "KPI monitoring · BI views",
+    tags: ["Analytics", "BI", "Dashboards"],
+    href: `${GITHUB_ORG}`,
     external: true,
   },
 ] as const;
