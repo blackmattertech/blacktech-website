@@ -159,25 +159,25 @@ const AUTOMATION_LABELS = [
 const DRAW_CIRCLE_PATH =
   "M142.293 1C106.854 16.8908 6.08202 7.17705 1.23654 43.3756C-2.10604 68.3466 29.5633 73.2652 122.688 71.7518C215.814 70.2384 316.298 70.689 275.761 38.0785C230.14 1.37835 97.0503 24.4575 52.9384 1";
 
-/** Hover-only background for Website Development title column (raw video, no overlay). */
+/** Background video for Website Development title column (autoplay loop). */
 const WEBSITE_DEV_TEXT_HOVER_VIDEO = "/website.mp4";
 
-/** Hover-only background for Ecommerce Development title column (same behavior as website dev). */
+/** Background video for Ecommerce Development title column (autoplay loop). */
 const ECOMMERCE_TEXT_HOVER_VIDEO = "/ecommerce.mp4";
 
-/** Hover-only background for Web Applications title column. */
+/** Background video for Web Applications title column (autoplay loop). */
 const WEB_APPLICATIONS_TEXT_HOVER_VIDEO = "/crm.mp4";
 
-/** Hover-only background for Mobile Applications title column. */
+/** Background video for Mobile Applications title column (autoplay loop). */
 const MOBILE_APPLICATIONS_TEXT_HOVER_VIDEO = "/mobileapps.mp4";
 
-/** Hover-only background for SaaS Platforms title column. */
+/** Background video for SaaS Platforms title column (autoplay loop). */
 const SAAS_PLATFORMS_TEXT_HOVER_VIDEO = "/saas.mp4";
 
-/** Hover-only background for UI/UX Design title column. */
+/** Background video for UI/UX Design title column (autoplay loop). */
 const UI_UX_TEXT_HOVER_VIDEO = "/ui-ux.mp4";
 
-/** Hover-only background for Automation & Systems title column. */
+/** Background video for Automation & Systems title column (autoplay loop). */
 const AUTOMATION_SYSTEMS_TEXT_HOVER_VIDEO = "/automation.mp4";
 
 function SpotlightLabel({
@@ -244,6 +244,36 @@ function ServiceFeaturePanel({
   const textShadowOnVideo =
     "drop-shadow-[0_2px_18px_rgba(0,0,0,0.92)] drop-shadow-[0_1px_4px_rgba(0,0,0,0.75)]";
 
+  useEffect(() => {
+    const video = hoverVideoRef.current;
+    if (!video || !textBlockHoverVideoSrc) return;
+
+    const tryPlay = () => {
+      video.defaultMuted = true;
+      video.muted = true;
+      video.playsInline = true;
+      video.setAttribute("muted", "");
+      video.setAttribute("playsinline", "");
+      video.setAttribute("webkit-playsinline", "true");
+      void video.play().catch(() => {});
+    };
+
+    const onVisibilityChange = () => {
+      if (!document.hidden) tryPlay();
+    };
+
+    tryPlay();
+    video.addEventListener("canplay", tryPlay);
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    window.addEventListener("touchstart", tryPlay, { once: true, passive: true });
+
+    return () => {
+      video.removeEventListener("canplay", tryPlay);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+      window.removeEventListener("touchstart", tryPlay);
+    };
+  }, [textBlockHoverVideoSrc]);
+
   const handleHoverVideoTimeUpdate = () => {
     if (hoverVideoSegmentLoopSec == null) return;
     const v = hoverVideoRef.current;
@@ -286,27 +316,22 @@ function ServiceFeaturePanel({
               ? "lg:order-2 lg:border-l lg:border-white/[0.1] lg:text-right"
               : "lg:order-1 lg:border-r lg:border-white/[0.1]"
           }`}
-          onMouseEnter={() => {
-            if (!textBlockHoverVideoSrc) return;
-            void hoverVideoRef.current?.play();
-          }}
-          onMouseLeave={() => {
-            if (!hoverVideoRef.current) return;
-            hoverVideoRef.current.pause();
-            hoverVideoRef.current.currentTime = 0;
-          }}
         >
           {textBlockHoverVideoSrc ? (
             <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
               <video
                 ref={hoverVideoRef}
-                className="h-full w-full object-cover opacity-0 transition-opacity duration-500 ease-out group-hover:opacity-100"
+                className="h-full w-full object-cover opacity-100"
                 src={textBlockHoverVideoSrc}
+                autoPlay
                 muted
                 loop={hoverVideoSegmentLoopSec == null}
                 playsInline
-                preload="metadata"
+                preload="auto"
                 aria-hidden
+                onLoadedData={() => {
+                  void hoverVideoRef.current?.play().catch(() => {});
+                }}
                 onTimeUpdate={handleHoverVideoTimeUpdate}
                 onEnded={handleHoverVideoEnded}
               />
