@@ -45,8 +45,8 @@ export default function PrinciplesSection() {
             How we work
           </p>
           <h2 className="font-grotesk text-[clamp(1.65rem,4vw,2.75rem)] font-bold uppercase leading-[1.12] tracking-tight">
-            <span className="text-neon">Four Principles</span>{" "}
-            <span className="text-black">That Shape Everything We Do</span>
+            <span className="text-neon">Why choose us</span>{" "}
+            <span className="text-black">as your software partner</span>
           </h2>
           <p className="mx-auto mt-6 max-w-2xl font-body text-base font-normal leading-relaxed text-[#4A4A4A] md:text-lg">
             Clarity, partnership, and systems — held together by{" "}

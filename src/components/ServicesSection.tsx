@@ -373,13 +373,23 @@ export default function ServicesSection() {
 
   return (
     <section
-      id="features"
+      id="services"
+      aria-labelledby="services-heading"
       className="border-t border-white/[0.07] bg-black py-20 text-white md:py-28"
     >
       <div className="mx-auto max-w-7xl px-6 md:px-8 xl:max-w-[90rem] xl:px-10">
         <ImmersiveReveal className="mb-10 md:mb-12">
           <div className="mb-8 sm:mb-10">
-            <SpotlightSectionHeading>What we build</SpotlightSectionHeading>
+            <h2 id="services-heading" className="sr-only">
+              Our capabilities — custom software development services
+            </h2>
+            <SpotlightSectionHeading>Our capabilities</SpotlightSectionHeading>
+            <p className="mt-4 max-w-3xl text-sm leading-relaxed text-white/55 md:text-base">
+              Product categories for teams that need a software development
+              company: custom web applications, ecommerce, mobile apps, SaaS
+              platforms, UI/UX, and business automation — with reliable delivery
+              from discovery to production.
+            </p>
           </div>
           <ServiceFeaturePanel
             activeCycle={activeCycle}
@@ -492,7 +502,9 @@ export default function ServicesSection() {
                   >
                     <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z" />
                   </svg>
-                  <span className="proposal-cta__text">Request a proposal</span>
+                  <span className="proposal-cta__text">
+                    Request custom software development quote
+                  </span>
                   <span className="proposal-cta__circle" aria-hidden />
                   <svg
                     viewBox="0 0 24 24"

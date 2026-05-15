@@ -47,8 +47,8 @@ export default function AboutSection() {
             className="text-4xl leading-[1.1] tracking-tight text-white md:text-6xl lg:text-7xl"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
-            <span className="italic text-white/60">We</span>{" "}
-            build software that simplifies{" "}
+            <span className="italic text-white/60">A trusted</span>{" "}
+            custom software development partner that simplifies{" "}
             <span className="italic text-neon">complex operations</span>
             —replacing spreadsheets, brittle integrations, and{" "}
             <span className="italic text-neon">chaos</span>

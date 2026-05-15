@@ -17,6 +17,7 @@ const PremiumCapabilitiesMarquee = lazy(
 const PhilosophySection = lazy(() => import("./components/PhilosophySection"));
 const SpaceCTASection = lazy(() => import("./components/SpaceCTASection"));
 const MarqueeStrip = lazy(() => import("./components/MarqueeStrip"));
+const FaqSection = lazy(() => import("./components/FaqSection"));
 const ContactSection = lazy(() => import("./components/ContactSection"));
 const SplineFooterSection = lazy(
   () => import("./components/SplineFooterSection")
@@ -67,6 +68,7 @@ export default function Index() {
             <Suspense fallback={<SectionFallback />}>
               <SpaceCTASection />
               <MarqueeStrip />
+              <FaqSection />
               <ContactSection />
             </Suspense>
           </DeferredSection>

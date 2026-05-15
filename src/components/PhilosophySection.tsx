@@ -53,6 +53,9 @@ export default function PhilosophySection() {
             BlackMatter Technologies
           </p>
           <div className="max-w-5xl">
+            <h2 className="sr-only">
+              Software development process — from chaos to production systems
+            </h2>
             <SpotlightSectionHeading>
               From Scattered Tools to Scalable Systems
             </SpotlightSectionHeading>
