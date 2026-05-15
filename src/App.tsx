@@ -1,13 +1,17 @@
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ConsentAwareAnalytics from "./components/ConsentAwareAnalytics";
 import CookieConsent from "./components/CookieConsent";
 import ProjectInquiryModal from "./components/ProjectInquiryModal";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./Index";
-import BlogDetailPage from "./pages/BlogDetailPage";
-import BlogPage from "./pages/BlogPage";
-import PoliciesPage from "./pages/PoliciesPage";
-import TagUnlimitedErpCaseStudyPage from "./pages/TagUnlimitedErpCaseStudyPage";
+
+const BlogPage = lazy(() => import("./pages/BlogPage"));
+const BlogDetailPage = lazy(() => import("./pages/BlogDetailPage"));
+const PoliciesPage = lazy(() => import("./pages/PoliciesPage"));
+const TagUnlimitedErpCaseStudyPage = lazy(
+  () => import("./pages/TagUnlimitedErpCaseStudyPage")
+);
 
 export default function App() {
   return (
@@ -16,16 +20,18 @@ export default function App() {
       <ScrollToTop />
       <ConsentAwareAnalytics />
       <CookieConsent />
-      <Routes>
-        <Route path="/" element={<Index />} />
-        <Route path="/blog" element={<BlogPage />} />
-        <Route path="/blog/:slug" element={<BlogDetailPage />} />
-        <Route path="/policies" element={<PoliciesPage />} />
-        <Route
-          path="/case-studies/tag-unlimited-erp"
-          element={<TagUnlimitedErpCaseStudyPage />}
-        />
-      </Routes>
+      <Suspense fallback={<div className="min-h-dvh bg-black" aria-hidden />}>
+        <Routes>
+          <Route path="/" element={<Index />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogDetailPage />} />
+          <Route path="/policies" element={<PoliciesPage />} />
+          <Route
+            path="/case-studies/tag-unlimited-erp"
+            element={<TagUnlimitedErpCaseStudyPage />}
+          />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

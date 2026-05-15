@@ -1,28 +1,41 @@
 import { Github, Mail, MessageSquare } from "lucide-react";
+import { useMediaLite } from "../hooks/useMediaLite";
+import LazyVideo from "./LazyVideo";
 import PageContainer from "./layout/PageContainer";
 import StickySiteNav from "./StickySiteNav";
 
 const VIDEO =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_045634_e1c98c76-1265-4f5c-882a-4276f2080894.mp4";
+const HERO_POSTER = "/footer-hero.png";
 
 /**
  * Full-viewport hero: space video, headline, neon tagline, vertical contact stack.
  */
 export default function OrbisLabsVideoSection() {
+  const mediaLite = useMediaLite();
+
   return (
     <section
       id="hero"
       className="relative min-h-dvh scroll-mt-16 overflow-hidden rounded-b-2xl bg-black text-white sm:rounded-b-[32px]"
     >
       <StickySiteNav />
-      <video
-        className="absolute inset-0 z-0 h-full w-full object-cover"
-        src={VIDEO}
-        autoPlay
-        muted
-        loop
-        playsInline
-      />
+      {mediaLite ? (
+        <img
+          src={HERO_POSTER}
+          alt=""
+          className="absolute inset-0 z-0 h-full w-full object-cover"
+          decoding="async"
+          fetchPriority="high"
+        />
+      ) : (
+        <LazyVideo
+          src={VIDEO}
+          poster={HERO_POSTER}
+          className="absolute inset-0 z-0 h-full w-full object-cover"
+          rootMargin="0px"
+        />
+      )}
       <div className="absolute inset-0 z-[1] bg-black/50" />
 
       <div className="absolute right-4 top-[5.5rem] z-20 flex flex-col gap-3 sm:right-6 md:hidden xl:right-8">

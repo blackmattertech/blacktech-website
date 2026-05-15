@@ -3,6 +3,9 @@ import { SpotlightSectionHeading } from "./SpotlightSectionHeading";
 import { ImmersiveReveal } from "./motion/ImmersiveReveal";
 import { AnimatePresence, motion } from "framer-motion";
 import { type MouseEvent, useEffect, useRef, useState } from "react";
+import { useMediaLite } from "../hooks/useMediaLite";
+import { useInView } from "../hooks/useInView";
+import LazyVideo from "./LazyVideo";
 
 const WEB_DESIGN_POINTS = [
   {
@@ -240,68 +243,13 @@ function ServiceFeaturePanel({
   hoverVideoSegmentLoopSec?: number;
 }) {
   const n = labels.length;
-  const hoverVideoRef = useRef<HTMLVideoElement | null>(null);
+  const blockRef = useRef<HTMLDivElement>(null);
+  const mediaLite = useMediaLite();
+  const blockInView = useInView(blockRef, { rootMargin: "200px 0px", once: true });
+  const showVideo =
+    Boolean(textBlockHoverVideoSrc) && !mediaLite && blockInView;
   const textShadowOnVideo =
     "drop-shadow-[0_2px_18px_rgba(0,0,0,0.92)] drop-shadow-[0_1px_4px_rgba(0,0,0,0.75)]";
-
-  useEffect(() => {
-    const video = hoverVideoRef.current;
-    if (!video || !textBlockHoverVideoSrc) return;
-
-    const tryPlay = () => {
-      video.defaultMuted = true;
-      video.muted = true;
-      video.playsInline = true;
-      video.setAttribute("muted", "");
-      video.setAttribute("playsinline", "");
-      video.setAttribute("webkit-playsinline", "true");
-      void video.play().catch(() => {});
-    };
-
-    const onVisibilityChange = () => {
-      if (!document.hidden) tryPlay();
-    };
-
-    tryPlay();
-    video.addEventListener("canplay", tryPlay);
-    document.addEventListener("visibilitychange", onVisibilityChange);
-    window.addEventListener("touchstart", tryPlay, { once: true, passive: true });
-
-    return () => {
-      video.removeEventListener("canplay", tryPlay);
-      document.removeEventListener("visibilitychange", onVisibilityChange);
-      window.removeEventListener("touchstart", tryPlay);
-    };
-  }, [textBlockHoverVideoSrc]);
-
-  const handleHoverVideoTimeUpdate = () => {
-    if (hoverVideoSegmentLoopSec == null) return;
-    const v = hoverVideoRef.current;
-    if (!v) return;
-    const duration = v.duration;
-    const end =
-      Number.isFinite(duration) && duration > 0
-        ? Math.min(hoverVideoSegmentLoopSec, duration)
-        : hoverVideoSegmentLoopSec;
-    if (v.currentTime >= end - 0.04) {
-      v.currentTime = 0;
-    }
-  };
-
-  const handleHoverVideoEnded = () => {
-    if (hoverVideoSegmentLoopSec == null) return;
-    const v = hoverVideoRef.current;
-    if (!v) return;
-    const duration = v.duration;
-    if (
-      Number.isFinite(duration) &&
-      duration > 0 &&
-      duration < hoverVideoSegmentLoopSec
-    ) {
-      v.currentTime = 0;
-      void v.play();
-    }
-  };
 
   return (
     <div className="min-w-0 overflow-hidden rounded-2xl border border-white/[0.12] bg-black/60">
@@ -311,6 +259,7 @@ function ServiceFeaturePanel({
         }`}
       >
         <div
+          ref={blockRef}
           className={`group relative isolate min-w-0 overflow-visible p-10 md:p-12 lg:p-14 ${
             flipLayout
               ? "lg:order-2 lg:border-l lg:border-white/[0.1] lg:text-right"
@@ -319,22 +268,19 @@ function ServiceFeaturePanel({
         >
           {textBlockHoverVideoSrc ? (
             <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
-              <video
-                ref={hoverVideoRef}
-                className="h-full w-full object-cover opacity-100"
-                src={textBlockHoverVideoSrc}
-                autoPlay
-                muted
-                loop={hoverVideoSegmentLoopSec == null}
-                playsInline
-                preload="auto"
-                aria-hidden
-                onLoadedData={() => {
-                  void hoverVideoRef.current?.play().catch(() => {});
-                }}
-                onTimeUpdate={handleHoverVideoTimeUpdate}
-                onEnded={handleHoverVideoEnded}
-              />
+              {showVideo ? (
+                <LazyVideo
+                  src={textBlockHoverVideoSrc}
+                  className="h-full w-full object-cover opacity-100"
+                  loop={hoverVideoSegmentLoopSec == null}
+                  rootMargin="0px"
+                />
+              ) : (
+                <div
+                  className="h-full w-full bg-gradient-to-br from-white/[0.06] to-black/80"
+                  aria-hidden
+                />
+              )}
             </div>
           ) : null}
           <div className="relative z-10 min-w-0">

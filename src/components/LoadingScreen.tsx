@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-const WORDS = ["Simplify", "Systemize", "Automate", "Track", "Scale"];
+const WORDS = ["Simplify", "Scale", "Automate"] as const;
+/** Full intro cap — keep under 1s total including exit fade. */
+const LOADER_MS = 850;
+const EXIT_MS = 120;
 
 export default function LoadingScreen({
   onComplete,
@@ -12,37 +15,36 @@ export default function LoadingScreen({
   const [wordIndex, setWordIndex] = useState(0);
 
   useEffect(() => {
+    const id = window.setInterval(
+      () => setWordIndex((i) => (i + 1) % WORDS.length),
+      Math.floor(LOADER_MS / WORDS.length)
+    );
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
     const start = performance.now();
-    const duration = 5000;
     let raf = 0;
     const step = (now: number) => {
-      const t = Math.min(1, (now - start) / duration);
+      const t = Math.min(1, (now - start) / LOADER_MS);
       setCount(Math.floor(t * 100));
       if (t < 1) raf = requestAnimationFrame(step);
       else {
         setCount(100);
-        window.setTimeout(onComplete, 400);
+        window.setTimeout(onComplete, EXIT_MS);
       }
     };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
   }, [onComplete]);
 
-  useEffect(() => {
-    const id = window.setInterval(
-      () => setWordIndex((i) => (i + 1) % WORDS.length),
-      900
-    );
-    return () => clearInterval(id);
-  }, []);
-
   return (
     <div className="fixed inset-0 z-[9999] flex flex-col bg-black text-white">
       <motion.div
         className="absolute left-6 top-6 md:left-10 md:top-8"
-        initial={{ opacity: 0, y: -20 }}
+        initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.25 }}
       >
         <img
           src="/logo.svg"
@@ -59,10 +61,10 @@ export default function LoadingScreen({
           <AnimatePresence mode="wait">
             <motion.p
               key={WORDS[wordIndex]}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.35 }}
+              exit={{ opacity: 0, y: -16 }}
+              transition={{ duration: 0.2 }}
               className="absolute inset-0 flex items-center justify-center text-center font-display text-4xl italic text-white/80 md:text-6xl lg:text-7xl"
             >
               {WORDS[wordIndex]}

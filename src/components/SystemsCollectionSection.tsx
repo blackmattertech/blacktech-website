@@ -1,6 +1,8 @@
 import { ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useMediaLite } from "../hooks/useMediaLite";
+import LazyVideo from "./LazyVideo";
 import { ImmersiveReveal } from "./motion/ImmersiveReveal";
 import SplitText from "./SplitText";
 import { SPOTLIGHT_SECTION_HEADING_TYPO } from "./SpotlightSectionHeading";
@@ -71,6 +73,8 @@ const CARDS = [
 ] as const;
 
 export default function SystemsCollectionSection() {
+  const mediaLite = useMediaLite();
+
   return (
     <section
       id="systems-collection"
@@ -103,14 +107,17 @@ export default function SystemsCollectionSection() {
             >
               {/* Video */}
               <div className="relative aspect-video overflow-hidden">
-                <video
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  src={card.video}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                />
+                {mediaLite ? (
+                  <motion.div
+                    className="h-full w-full bg-gradient-to-br from-white/[0.08] to-black"
+                    aria-hidden
+                  />
+                ) : (
+                  <LazyVideo
+                    src={card.video}
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+                )}
                 <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
               </div>
 
