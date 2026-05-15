@@ -8,7 +8,8 @@
     "dev:vite": "vite",
     "dev:api": "node server/index.mjs",
     "dev:vite-only": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run sitemap && tsc -b && vite build",
+    "sitemap": "node scripts/generate-sitemap.mjs",
     "preview": "vite preview",
     "start:api": "node server/index.mjs"
   },

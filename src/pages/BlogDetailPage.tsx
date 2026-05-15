@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { CalendarDays, Clock3, UserCircle2 } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
+import { useSeoOverrides } from "../components/PageSeo";
 import StickySiteNav from "../components/StickySiteNav";
+import { SITE_NAME, absoluteUrl } from "../constants/site";
 import {
   type BlogDetail,
   type BlogListItem,
@@ -11,6 +13,7 @@ import {
 
 export default function BlogDetailPage() {
   const { slug } = useParams();
+  const setSeoOverrides = useSeoOverrides();
   const [post, setPost] = useState<BlogDetail | null>(null);
   const [similarPosts, setSimilarPosts] = useState<BlogListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -61,6 +64,27 @@ export default function BlogDetailPage() {
       alive = false;
     };
   }, [slug]);
+
+  useEffect(() => {
+    if (!post) {
+      setSeoOverrides(undefined);
+      return;
+    }
+
+    const image = post.image.startsWith("http")
+      ? post.image
+      : absoluteUrl(post.image);
+
+    setSeoOverrides({
+      title: `${post.title} | ${SITE_NAME}`,
+      description: post.excerpt,
+      path: `/blog/${post.slug}`,
+      image,
+      imageAlt: post.title,
+    });
+
+    return () => setSeoOverrides(undefined);
+  }, [post, setSeoOverrides]);
 
   return (
     <div className="relative min-h-dvh overflow-hidden bg-[#04060d] text-white">

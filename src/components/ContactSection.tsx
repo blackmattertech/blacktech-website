@@ -64,13 +64,24 @@ export default function ContactSection() {
             className="mt-4 max-w-2xl text-4xl tracking-tight text-white md:text-5xl lg:text-6xl"
             style={{ fontFamily: "'Instrument Serif', serif" }}
           >
-            Tell us what you&apos;re{" "}
-            <span className="italic text-white/55">building</span>
+            Get a quote for{" "}
+            <span className="italic text-white/55">custom software development</span>
           </h2>
           <p className="mt-4 max-w-xl text-sm leading-relaxed text-white/50 md:text-base">
-            BlackMatter Technologies builds intelligent, scalable digital
-            systems for complex operations. Share a short brief—we&apos;ll
-            follow up by email.
+            Start your ERP, SaaS, or web application project with a software
+            development company in India trusted for on-time delivery. Share a
+            short brief — we&apos;ll follow up by email. See{" "}
+            <a href="#faq" className="text-white/75 underline-offset-2 hover:underline">
+              FAQs
+            </a>{" "}
+            or{" "}
+            <a
+              href="#systems-collection"
+              className="text-white/75 underline-offset-2 hover:underline"
+            >
+              case studies
+            </a>
+            .
           </p>
         </ImmersiveReveal>
 
