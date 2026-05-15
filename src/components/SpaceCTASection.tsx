@@ -1,4 +1,6 @@
 import { Github, Mail, MessageSquare } from "lucide-react";
+import { useMediaLite } from "../hooks/useMediaLite";
+import LazyVideo from "./LazyVideo";
 
 const VIDEO =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_055729_72d66327-b59e-4ae9-bb70-de6ccb5ecdb0.mp4";
@@ -15,6 +17,8 @@ const CTA_LINES = [
 ] as const;
 
 export default function SpaceCTASection() {
+  const mediaLite = useMediaLite();
+
   return (
     <section
       id="space-cta"
@@ -22,14 +26,17 @@ export default function SpaceCTASection() {
       aria-labelledby="space-cta-heading"
     >
       <div className="relative w-full">
-        <video
-          className="block h-auto min-h-[360px] w-full object-cover sm:min-h-[420px] lg:min-h-[480px]"
-          src={VIDEO}
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
+        {mediaLite ? (
+          <div
+            className="block min-h-[360px] w-full bg-[radial-gradient(ellipse_at_30%_40%,rgba(111,255,0,0.12),#000_65%)] sm:min-h-[420px] lg:min-h-[480px]"
+            aria-hidden
+          />
+        ) : (
+          <LazyVideo
+            src={VIDEO}
+            className="block h-auto min-h-[360px] w-full object-cover sm:min-h-[420px] lg:min-h-[480px]"
+          />
+        )}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/90 via-black/55 to-black/75" />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/85 via-transparent to-black/45" />
 

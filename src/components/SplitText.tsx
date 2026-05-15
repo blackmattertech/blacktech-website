@@ -9,6 +9,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useMediaLite } from "../hooks/useMediaLite";
 
 gsap.registerPlugin(ScrollTrigger, GSAPSplitText);
 
@@ -51,6 +52,7 @@ export default function SplitText({
   const animationCompletedRef = useRef(false);
   const onCompleteRef = useRef(onLetterAnimationComplete);
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const mediaLite = useMediaLite();
 
   useEffect(() => {
     onCompleteRef.current = onLetterAnimationComplete;
@@ -73,7 +75,7 @@ export default function SplitText({
   useGSAP(
     () => {
       const el = ref.current as SplitTextHost | null;
-      if (!el || !text || !fontsLoaded) return;
+      if (mediaLite || !el || !text || !fontsLoaded) return;
       if (animationCompletedRef.current) return;
 
       if (el._rbsplitInstance) {
@@ -178,10 +180,21 @@ export default function SplitText({
         threshold,
         rootMargin,
         fontsLoaded,
+        mediaLite,
       ],
       scope: ref,
     },
   );
+
+  const Tag = (tag || "p") as ElementType;
+
+  if (mediaLite) {
+    return (
+      <Tag className={className} style={{ textAlign }}>
+        {text}
+      </Tag>
+    );
+  }
 
   const style: CSSProperties = {
     textAlign,
@@ -193,7 +206,6 @@ export default function SplitText({
   };
 
   const classes = `split-parent ${className}`.trim();
-  const Tag = (tag || "p") as ElementType;
 
   return (
     <Tag ref={ref as never} style={style} className={classes}>

@@ -1,4 +1,5 @@
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { useInView } from "../hooks/useInView";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { resetCookieConsentAndReload } from "../constants/cookieConsent";
@@ -52,29 +53,55 @@ const SPECS = [
 /**
  * Site footer: Spline scene + specs + sole “Contact us” entry point (no SiteFooter).
  */
+/** WebGL footer scene — skip on narrow viewports to avoid mobile freezes. */
+function useSplineEnabled() {
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const update = () => setEnabled(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+
+  return enabled;
+}
+
 export default function SplineFooterSection() {
   const reduce = useReducedMotion();
+  const splineCapable = useSplineEnabled();
+  const footerRef = useRef<HTMLElement>(null);
+  const footerInView = useInView(footerRef, { rootMargin: "400px 0px", once: true });
+  const loadSpline = splineCapable && footerInView;
 
   return (
     <footer
+      ref={footerRef}
       id="spline-footer"
       className="relative min-h-[min(100svh,900px)] overflow-x-hidden bg-black text-white selection:bg-white selection:text-black"
       aria-label="Site footer"
     >
       <div className="absolute inset-0 z-0 bg-[#0a0a0a]">
-        <Suspense
-          fallback={<div className="h-full w-full bg-black" aria-hidden />}
-        >
-          <div
-            className="absolute inset-0 h-full w-full [&_canvas]:pointer-events-auto"
-            style={{ transform: "translateX(15%)" }}
+        {loadSpline ? (
+          <Suspense
+            fallback={<div className="h-full w-full bg-black" aria-hidden />}
           >
-            <Spline
-              scene={SPLINE_SCENE}
-              className="pointer-events-auto h-full w-full !absolute !inset-0"
-            />
-          </div>
-        </Suspense>
+            <div
+              className="absolute inset-0 h-full w-full [&_canvas]:pointer-events-auto md:[transform:translateX(15%)]"
+            >
+              <Spline
+                scene={SPLINE_SCENE}
+                className="pointer-events-auto h-full w-full !absolute !inset-0"
+              />
+            </div>
+          </Suspense>
+        ) : (
+          <div
+            className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_50%,rgba(111,255,0,0.08),transparent_55%)]"
+            aria-hidden
+          />
+        )}
         <div
           className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black via-black/70 to-transparent"
           aria-hidden

@@ -1,18 +1,30 @@
-import { useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { useReducedMotion } from "framer-motion";
-import AboutSection from "./components/AboutSection";
-import PrinciplesSection from "./components/PrinciplesSection";
-import ContactSection from "./components/ContactSection";
-import SplineFooterSection from "./components/SplineFooterSection";
+import DeferredSection from "./components/DeferredSection";
 import LoadingScreen from "./components/LoadingScreen";
-import MarqueeStrip from "./components/MarqueeStrip";
 import OrbisLabsVideoSection from "./components/OrbisLabsVideoSection";
-import PhilosophySection from "./components/PhilosophySection";
-import PremiumCapabilitiesMarquee from "./components/PremiumCapabilitiesMarquee";
-import ServicesSection from "./components/ServicesSection";
-import SpaceCTASection from "./components/SpaceCTASection";
 import SocialSpreadCard from "./components/SocialSpreadCard";
-import SystemsCollectionSection from "./components/SystemsCollectionSection";
+
+const AboutSection = lazy(() => import("./components/AboutSection"));
+const PrinciplesSection = lazy(() => import("./components/PrinciplesSection"));
+const ServicesSection = lazy(() => import("./components/ServicesSection"));
+const SystemsCollectionSection = lazy(
+  () => import("./components/SystemsCollectionSection")
+);
+const PremiumCapabilitiesMarquee = lazy(
+  () => import("./components/PremiumCapabilitiesMarquee")
+);
+const PhilosophySection = lazy(() => import("./components/PhilosophySection"));
+const SpaceCTASection = lazy(() => import("./components/SpaceCTASection"));
+const MarqueeStrip = lazy(() => import("./components/MarqueeStrip"));
+const ContactSection = lazy(() => import("./components/ContactSection"));
+const SplineFooterSection = lazy(
+  () => import("./components/SplineFooterSection")
+);
+
+function SectionFallback() {
+  return <div className="min-h-[20rem] bg-black" aria-hidden />;
+}
 
 export default function Index() {
   const reduce = useReducedMotion();
@@ -27,21 +39,45 @@ export default function Index() {
       {isLoading && (
         <LoadingScreen onComplete={() => setIsLoading(false)} />
       )}
-      <div className="min-h-screen bg-black text-white">
-        <SocialSpreadCard />
-        <OrbisLabsVideoSection />
+      {!isLoading && (
+        <div className="min-h-screen overflow-x-hidden bg-black text-white">
+          <SocialSpreadCard />
+          <OrbisLabsVideoSection />
 
-        <AboutSection />
-        <PrinciplesSection />
-        <ServicesSection />
-        <SystemsCollectionSection />
-        <PremiumCapabilitiesMarquee />
-        <PhilosophySection />
-        <SpaceCTASection />
-        <MarqueeStrip />
-        <ContactSection />
-        <SplineFooterSection />
-      </div>
+          <Suspense fallback={<SectionFallback />}>
+            <AboutSection />
+            <PrinciplesSection />
+          </Suspense>
+
+          <DeferredSection minHeight="48rem">
+            <Suspense fallback={<SectionFallback />}>
+              <ServicesSection />
+            </Suspense>
+          </DeferredSection>
+
+          <DeferredSection minHeight="40rem">
+            <Suspense fallback={<SectionFallback />}>
+              <SystemsCollectionSection />
+              <PremiumCapabilitiesMarquee />
+              <PhilosophySection />
+            </Suspense>
+          </DeferredSection>
+
+          <DeferredSection minHeight="36rem">
+            <Suspense fallback={<SectionFallback />}>
+              <SpaceCTASection />
+              <MarqueeStrip />
+              <ContactSection />
+            </Suspense>
+          </DeferredSection>
+
+          <DeferredSection minHeight="50rem">
+            <Suspense fallback={<SectionFallback />}>
+              <SplineFooterSection />
+            </Suspense>
+          </DeferredSection>
+        </div>
+      )}
     </>
   );
 }
