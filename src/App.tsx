@@ -1,10 +1,8 @@
 import { lazy, Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import ConsentAwareAnalytics from "./components/ConsentAwareAnalytics";
-import CookieConsent from "./components/CookieConsent";
+import DeferredWidgets from "./components/DeferredWidgets";
 import { SeoProvider } from "./components/PageSeo";
-import SeoSchema from "./components/SeoSchema";
-import ProjectInquiryModal from "./components/ProjectInquiryModal";
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./Index";
 
@@ -19,11 +17,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <SeoProvider>
-        <SeoSchema />
-        <ProjectInquiryModal />
+        <DeferredWidgets />
         <ScrollToTop />
         <ConsentAwareAnalytics />
-        <CookieConsent />
         <Suspense fallback={<div className="min-h-dvh bg-black" aria-hidden />}>
           <Routes>
             <Route path="/" element={<Index />} />

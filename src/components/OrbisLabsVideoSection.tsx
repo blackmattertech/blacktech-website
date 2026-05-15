@@ -8,6 +8,7 @@ import StickySiteNav from "./StickySiteNav";
 const VIDEO =
   "https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260331_045634_e1c98c76-1265-4f5c-882a-4276f2080894.mp4";
 const HERO_POSTER = "/footer-hero.png";
+const HERO_MOBILE = "/hero-mobile.jpg";
 
 /**
  * Full-viewport hero: space video, headline, neon tagline, vertical contact stack.
@@ -23,11 +24,14 @@ export default function OrbisLabsVideoSection() {
       <StickySiteNav />
       {mediaLite ? (
         <img
-          src={HERO_POSTER}
+          src={HERO_MOBILE}
           alt="Custom software development company — BlackMatter Technologies"
           className="absolute inset-0 z-0 h-full w-full object-cover"
+          width={720}
+          height={411}
           decoding="async"
           fetchPriority="high"
+          sizes="100vw"
         />
       ) : (
         <LazyVideo
